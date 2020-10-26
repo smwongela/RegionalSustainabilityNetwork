@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:background="@color/green_50">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+             card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/can" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/text_view_project_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Energy Systems Ownership &amp; Governance"
+            android:textColor="@color/navy_blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+             />
+
+        <TextView
+            android:id="@+id/text_view_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+            android:text="Tanzania"
+            android:layout_gravity="center_horizontal"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/text_view_partner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:text="CAN, Partner"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+             />
+
+        <TextView
+            android:id="@+id/text_view_approved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Ongoing"
+            android:textColor="@color/greenDark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+             />
+
+        <TextView
+            android:id="@+id/text_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:text="Sep 2020-March 2021"
+            android:textColor="@color/forest_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+           />
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

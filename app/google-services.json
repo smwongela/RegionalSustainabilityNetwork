@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "442246915080",
+    "firebase_url": "https://regional-sustainabilty-network.firebaseio.com",
+    "project_id": "regional-sustainabilty-network",
+    "storage_bucket": "regional-sustainabilty-network.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442246915080:android:b2a6fcdc6c4f7635771dbd",
+        "android_client_info": {
+          "package_name": "com.mwongela.regionalsustainabilitynetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442246915080-4i19cal5n88gdapcjq0pv85jui7aa3nn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mwongela.regionalsustainabilitynetwork",
+            "certificate_hash": "64c400268c792e40675c169ab6da3377806ba724"
+          }
+        },
+        {
+          "client_id": "442246915080-9ajblpif1a4p5gts5o2qu6e27jnciu9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIdeQSLS-00B8yqmSdWSzLLWgh6pDmSjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442246915080-9ajblpif1a4p5gts5o2qu6e27jnciu9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

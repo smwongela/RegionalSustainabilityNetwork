@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:logo="@mipmap/ic_rsn_africa"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:padding="10dp"
+        app:titleTextAppearance="@style/app_title" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_below="@id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#000000"
+            tools:context=".PostActivity">
+            <!--
+           <ImageView
+            android:id="@+id/userImage"
+            android:layout_marginStart="20dp"
+
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:src="@drawable/wood" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                />!-->
+
+            <ImageButton
+                android:id="@+id/imgBtn"
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_photo"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="1dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Add a Picture"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@android:color/white" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/EditText.White.Hint">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="-4dp"
+                    android:id="@+id/textTitle"
+                    android:hint="Title?"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_10"
+                    android:theme="@style/EditText.White" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/EditText.White.Hint">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="-4dp"
+                    android:id="@+id/textDesc"
+                    android:hint="What do you  want  to talk about?"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:maxLines="10"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_10"
+                    android:theme="@style/EditText.White" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kajiado"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                />
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/postBtn"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+
+                android:background="@drawable/button_2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Post"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

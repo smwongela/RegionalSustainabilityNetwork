@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Regional Sustainability Network</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_location">Start Tracking Location</string>
+    <string name="android_image">Android Image</string>
+    <string name="textview_hint">Press the button to get Start tracking your
+        location</string>
+    <string name="location_text">"Latitude: %1$.4f \n Longitude: %2$.4f
+\n Timestamp: %3$tr"</string>
+    <string name="no_location">Could not get location</string>
+    <string name="geo_not_available">Geo coding service is not available</string>
+    <string name="no_address_found">No address found</string>
+    <string name="address_text">"Near: %1$s \n At: %2$tr"</string>
+    <string name="loading">Loading.....</string>
+    <string name="invalid_lat_long_used">Invalid lat log</string>
+    <string name="stop_tracking_location">Stop tracking location</string>
+    <string name="tab_label_1">Projects </string>
+    <string name="tab_label_2">Events </string>
+    <string name="tab_label_3">Reports</string>
+    <string name="partner_label">Project Dashboard</string>
+    <string name="projectTitle"><![CDATA[Energy Systems Ownership \n& Governance]]></string>
+    <string name="rsn">Regional Sustainability Network</string>
+    <string-array name="partners">
+        <item>EED</item>
+        <item>ECRC</item>
+        <item>KCIC</item>
+        <item>DRFN</item>
+        <item>CEAL</item>
+        <item>CADIM</item>
+        <item>CAN</item>
+        <item>Urbis</item>
+        <item>Champions</item>
+        <item>Hanns Seidel </item>
+    </string-array>
+    <string-array name="countries">
+        <item>Kenya</item>
+        <item>Ghana</item>
+        <item>Togo</item>
+        <item>Namibia</item>
+        <item>Tanzania</item>
+        <item>Congo</item>
+        <item>South Africa</item>
+        <item>Ethiopia</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="events">
+        <item>Workshop</item>
+        <item>Town Hall</item>
+        <item>Training</item>
+
+    </string-array>
+</resources>
