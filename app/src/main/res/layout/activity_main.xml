@@ -17,6 +17,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="65dp"
+            android:layout_gravity="center_vertical"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/partnerLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/africa_rsn" />
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/myLogo"
             android:layout_width="120dp"
@@ -28,7 +45,8 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toRightOf="@id/myLogo"
             android:orientation="vertical">
 
