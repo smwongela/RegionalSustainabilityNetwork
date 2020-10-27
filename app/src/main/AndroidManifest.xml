@@ -17,7 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateProjectActivity"></activity>
+        <activity android:name=".CealOne"></activity>
+        <activity android:name=".CadimOne" />
+        <activity android:name=".CanOne" />
+        <activity android:name=".QuestionFive" />
+        <activity android:name=".QuestionThree" />
+        <activity android:name=".QuestionOne" />
+        <activity android:name=".CreateProjectActivity" />
         <activity android:name=".SinglePostActivity" />
         <activity
             android:name=".PostActivity"

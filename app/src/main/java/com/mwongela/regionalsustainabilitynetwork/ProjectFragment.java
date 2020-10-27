@@ -137,11 +137,28 @@ public class ProjectFragment extends Fragment {
 
 
                                     if(projectConvener.equalsIgnoreCase("CADIM")) {
-                                        Picasso.with(getContext()).load(R.drawable.ceal2).resize(200,200)
-
-                                                .into(holder.partner_logo);
-
-                                        //holder.changingLayout.setBackgroundResource(R.drawable.stickgreen);
+                                        Picasso.with(getContext()).load(R.drawable.cadim).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("EED")) {
+                                        Picasso.with(getContext()).load(R.drawable.eed_logo).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("CAN")) {
+                                        Picasso.with(getContext()).load(R.drawable.can).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("CEAL")) {
+                                        Picasso.with(getContext()).load(R.drawable.ceal2).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("Urbis")) {
+                                        Picasso.with(getContext()).load(R.drawable.urbis).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("Champions")) {
+                                        Picasso.with(getContext()).load(R.drawable.champions_logo).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("DRFN")) {
+                                        Picasso.with(getContext()).load(R.drawable.drfn_logo).into(holder.partner_logo);
+                                    }
+                                    if(projectConvener.equalsIgnoreCase("SOS")) {
+                                        Picasso.with(getContext()).load(R.drawable.sos_logo).into(holder.partner_logo);
                                     }
                                     //<item>EED</item>
                                     //        <item>ECRC</item>

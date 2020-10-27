@@ -22,6 +22,11 @@
     <string name="partner_label">Project Dashboard</string>
     <string name="projectTitle"><![CDATA[Energy Systems Ownership \n& Governance]]></string>
     <string name="rsn">Regional Sustainability Network</string>
+    <string name="men">Men</string>
+    <string name="people_with_disabilities">People with Disabilities</string>
+    <string name="yes">Yes</string>
+    <string name="medium">Medium</string>
+    <string name="agree">Agree</string>
     <string-array name="partners">
         <item>EED</item>
         <item>ECRC</item>
@@ -30,6 +35,7 @@
         <item>CEAL</item>
         <item>CADIM</item>
         <item>CAN</item>
+        <item>SOS</item>
         <item>Urbis</item>
         <item>Champions</item>
         <item>Hanns Seidel </item>
