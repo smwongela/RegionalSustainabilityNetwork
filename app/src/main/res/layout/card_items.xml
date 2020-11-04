@@ -137,7 +137,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="#ff0000"
-                android:text="Likes"
+                android:text="@string/likes"
                 />
 
             <ImageButton

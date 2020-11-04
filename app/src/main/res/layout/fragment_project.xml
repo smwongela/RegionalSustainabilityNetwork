@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Our Projects"
+        android:text="@string/our_projects"
         android:textColor="@color/navy_blue"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -25,7 +25,7 @@
         android:layout_below="@id/text_intro_proj"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
-        android:text="Browse Projects"
+        android:text="@string/browse_projects"
         android:textColor="@color/css_gray"
         android:textSize="16sp"
         android:textStyle="italic" />
@@ -45,6 +45,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:src="@drawable/add" />
+        app:srcCompat="@drawable/ic_yellow_editor" />
 </RelativeLayout>
 

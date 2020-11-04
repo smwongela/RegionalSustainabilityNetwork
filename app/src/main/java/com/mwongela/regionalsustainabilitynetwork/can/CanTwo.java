@@ -1,4 +1,4 @@
-package com.mwongela.regionalsustainabilitynetwork;
+package com.mwongela.regionalsustainabilitynetwork.can;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,18 +9,21 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mwongela.regionalsustainabilitynetwork.LoginActivity;
+import com.mwongela.regionalsustainabilitynetwork.R;
+import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionFour;
 
-public class QuestionThree extends AppCompatActivity {
+public class CanTwo extends AppCompatActivity {
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_three);
+        setContentView(R.layout.activity_can_two);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
-            Intent loginIntent = new Intent(QuestionThree.this, LoginActivity.class);
+            Intent loginIntent = new Intent(CanTwo.this, LoginActivity.class);
             //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(loginIntent);
         }
@@ -28,15 +31,16 @@ public class QuestionThree extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabQ3);
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser!= null) {
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabCan2);
+        if (currentUser  !=null) {
+
+
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent next = new Intent(QuestionThree.this, QuestionFive.class);
+                    Intent next = new Intent(CanTwo.this, CanThree.class);
                     startActivity(next);
                 }
             });

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -281,6 +282,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (valid) {
+            Toast.makeText(EventActivity.this, R.string.processing, Toast.LENGTH_LONG).show();
             final DatabaseReference newEvent = databaseRef.push();
             //adding post contents to database reference
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {
@@ -305,7 +307,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                                     if (task.isSuccessful()) {
                                         //launch the main activity after posting
 
-                                        Intent intent = new Intent(EventActivity.this, ProjectActivity.class);
+                                        Intent intent = new Intent(EventActivity.this, MainActivity.class);
                                         startActivity(intent);
                                     }
                                 }

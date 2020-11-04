@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Regional Sustainability Network</string>
+    <string name="address_text">"Près: %1$s \n À: %2$tr"</string>
+    <string name="loading">Chargement.....</string>
+    <string name="invalid_lat_long_used">Invalid lat log</string>
+    <string name="stop_tracking_location">Stop tracking location</string>
+    <string name="tab_label_1">Projets</string>
+    <string name="tab_label_2">Événements</string>
+    <string name="tab_label_3">Rapports</string>
+    <string name="partner_label">Tableau de bord du projet</string>
+    <string name="projectTitle"><![CDATA[Energy Systems Ownership \n& Governance]]></string>
+    <string name="rsn">Regional Sustainability Network</string>
+    <string name="men">Hommes</string>
+    <string name="people_with_disabilities">Personnes handicapées</string>
+    <string name="yes">Oui</string>
+    <string name="medium">Moyen</string>
+    <string name="agree">Se mettre d\'accord</string>
+
+    <string name="add_a_picture">Ajouter une image</string>
+    <string name="post">Publier</string>
+    <string name="select_event_photo">
+Sélectionnez la photo de l\'événement</string>
+    <string name="label_q2">Q2. Comment les bénéficiaires cibles ont-ils bénéficié des activités?</string>
+    <string name="qn3Label">Q3. L\'initiative a-t-elle contribué à soutenir une politique nationale?</string>
+    <string name="qn4Label">Q4. Comment évalueriez-vous le niveau de succès de l\'initiative pilote à ce stade?</string>
+    <string name="qn5Label">Q5. Quels sont les défis que vous avez rencontrés au cours de l\'activité et comment les avez-vous résolus?</string>
+
+    <string name="this_is_for_cadim">THIS IS FOR CADIM</string>
+
+    <string name="qnCan10">Q10.The pilot initiative outcomes will enhance clean energy use in all districts and across Tanzania as a whole</string>
+    <string name="create_project">Créer un projet</string>
+    <string name="project_details">détails du projet</string>
+    <string name="project_name">nom du projet</string>
+    <string name="project_convener">Propriétaire du projet</string>
+    <string name="project_country">Pays du projet</string>
+    <string name="project_start_date_end_date">Date de début-date de fin du projet</string>
+    <string name="project_goals">Objectifs du projet</string>
+    <string name="project_activities">Les activités du projet</string>
+    <string name="expected_impact">Impact attendu</string>
+    <string name="create_event">Créer un évènement</string>
+    <string name="event_details">EDétails de l\'évènement</string>
+    <string name="event_name">Nom de l\'événement</string>
+    <string name="event_venue">Lieu de l\'événement</string>
+    <string name="event_date">Date de l\'événemente</string>
+    <string name="event_type">Type d\'événement</string>
+    <string name="expected_number_of_participants">Nombre prévu de participants</string>
+    <string name="event_convener">Responsable de l\'événement</string>
+    <string name="login">Le Login</string>
+    <string name="enter_email">Entrez votre e-mail</string>
+    <string name="enter_password">Entrer le mot de passe</string>
+
+    <string name="no_account_sign_up">Pas de compte ? S\'inscrire</string>
+    <string name="my_projects">Mes projets</string>
+    <string name="interactive_feed">Flux interactif</string>
+    <string name="rsn_podcast">RSN Podcast</string>
+    <string name="rsn_events">Événements</string>
+    <string name="thank_you">Merci d\'avoir répondu au sondage</string>
+    <string name="title">Titre?</string>
+    <string name="what_do_you_want_to_talk_about">De quoi veux-tu parler</string>
+    <string name="create_profile">Créer un profil</string>
+    <string name="set_profile_photo">Définir la photo de profil</string>
+    <string name="first_name">Prénom</string>
+    <string name="surname">Nom de famille</string>
+    <string name="gender">le sexe</string>
+    <string name="organisation">Organisation</string>
+    <string name="country">Pays</string>
+    <string name="designation">La désignation</string>
+    <string name="submit">Soumettre</string>
+    <string name="challenges">Défis</string>
+    <string name="partial">Partiel</string>
+    <string name="high">Haut</string>
+
+    <string name="could_not_login">Connexion impossible, utilisateur introuvable</string>
+    <string name="complete_all_fields">Remplissez tous les champs</string>
+    <string name="processing">EN TRAITEMENT....</string>
+    <string name="not_registered">Utilisateur non enregistré!</string>
+    <string name="please_login">veuillez vous connecter</string>
+    <string name="please_turn_gps">Veuillez activer le GPS</string>
+
+    <string-array name="gender">
+        <item>Mâle</item>
+        <item>Femelle</item>
+    </string-array>
+    <string-array name="events">
+    <item>Le séminaire</item>
+    <item>Mairie</item>
+    <item>Entraînement</item>
+    </string-array>
+
+    <string name="q1_constellation_of_participants">Q1. Constellation des participants</string>
+    <string name="please_indicate_number_of">Veuillez indiquer le nombre de:</string>
+    <string name="women">Femmes</string>
+    <string name="youth">Jeunesse</string>
+    <string name="no">Non</string>
+    <string name="if_yes_which_policy_ies">Si oui, quelle (s) politique (s)?</string>
+    <string name="policies">Stratégies</string>
+    <string name="survey">Enquête</string>
+    <string name="benefits">avantages</string>
+
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="email">email</string>
+    <string name="password">mot de passe</string>
+    <string name="register">S\'inscrire</string>
+    <string name="already_registered_login">déjà enregistré ? S\'identifier</string>
+    <string name="write_a_post">Rédiger un post</string>
+    <string name="likes">Aime</string>
+    <string name="fill_report">Remplir le rapport</string>
+    <string name="our_events">Nos Evénements</string>
+    <string name="browse_events">Parcourir les événements</string>
+    <string name="our_projects">Nos projets</string>
+    <string name="browse_projects">Parcourir les projets</string>
+    <string name="surveys">Enquêtes</string>
+    <string name="view_a_survey">Afficher une enquête</string>
+    <string name="ongoing">En cours</string>
+</resources>

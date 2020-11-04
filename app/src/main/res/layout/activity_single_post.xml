@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
 
-            android:text="Write a post"
+            android:text="@string/write_a_post"
             android:gravity="center"
             android:fontFamily="sans-serif"
             android:textColor="#ffffff"

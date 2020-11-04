@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 public class FetchAddressTask extends AsyncTask<Location,Void,String> {
-    private final String TAG = FetchAddressTask.class.getSimpleName();
-    private Context mContext;
+    public final String TAG = FetchAddressTask.class.getSimpleName();
+    public Context mContext;
 
-    private onTaskCompleted mListener;
+    public onTaskCompleted mListener;
     //EMPTY CONSTRUCTOR
 
-    FetchAddressTask(Context applicationContext,onTaskCompleted listener){
+    public FetchAddressTask(Context applicationContext, onTaskCompleted listener){
         mContext=applicationContext;
         mListener=listener;
 
@@ -76,7 +76,7 @@ public class FetchAddressTask extends AsyncTask<Location,Void,String> {
 
         return resultMessage;
     }
-    interface onTaskCompleted{
+    public interface onTaskCompleted{
         void onTaskCompleted(String result);
 
     }

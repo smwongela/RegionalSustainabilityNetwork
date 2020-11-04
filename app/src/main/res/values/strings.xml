@@ -2,16 +2,16 @@
     <string name="app_name">Regional Sustainability Network</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="get_location">Start Tracking Location</string>
-    <string name="android_image">Android Image</string>
-    <string name="textview_hint">Press the button to get Start tracking your
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="get_location" translatable="false">Start Tracking Location</string>
+    <string name="android_image" translatable="false">Android Image</string>
+    <string name="textview_hint" translatable="false">Press the button to get Start tracking your
         location</string>
-    <string name="location_text">"Latitude: %1$.4f \n Longitude: %2$.4f
+    <string name="location_text" translatable="false">"Latitude: %1$.4f \n Longitude: %2$.4f
 \n Timestamp: %3$tr"</string>
-    <string name="no_location">Could not get location</string>
-    <string name="geo_not_available">Geo coding service is not available</string>
-    <string name="no_address_found">No address found</string>
+    <string name="no_location" translatable="false">Could not get location</string>
+    <string name="geo_not_available" translatable="false">Geo coding service is not available</string>
+    <string name="no_address_found" translatable="false">No address found</string>
     <string name="address_text">"Near: %1$s \n At: %2$tr"</string>
     <string name="loading">Loading.....</string>
     <string name="invalid_lat_long_used">Invalid lat log</string>
@@ -27,6 +27,91 @@
     <string name="yes">Yes</string>
     <string name="medium">Medium</string>
     <string name="agree">Agree</string>
+    <string name="event_name">Event Name</string>
+    <string name="select_event_photo">Select event photo</string>
+    <string name="label_q2">Q2. How have the target beneficiaries benefited from the activities?</string>
+    <string name="qn3Label">Q3. Has the initiative been instrumental in supporting a national policy?</string>
+    <string name="qn4Label">Q4.How would you rate the level of success of the pilot initiative at this stage?</string>
+    <string name="qn5Label">Q5. What are the challenges that you encountered during the activity and how did you resolve them?</string>
+
+    <string name="this_is_for_cadim">THIS IS FOR CADIM</string>
+
+    <string name="qnCan10">Q10.The pilot initiative outcomes will enhance clean energy use in all districts and across Tanzania as a whole</string>
+    <string name="create_project">Create Project</string>
+    <string name="project_details">Project Details</string>
+    <string name="project_name">Project Name</string>
+    <string name="project_convener">Project Convener</string>
+    <string name="project_country">Project Country</string>
+    <string name="project_start_date_end_date">Project Start Date-End Date</string>
+    <string name="project_goals">Project Goals</string>
+    <string name="project_activities">Project Activities</string>
+    <string name="expected_impact">Expected Impact</string>
+    <string name="create_event">Create Event</string>
+    <string name="event_details">Event Details</string>
+
+    <string name="event_venue">Event Venue</string>
+    <string name="event_date">Event Date</string>
+    <string name="event_type">Event Type</string>
+    <string name="expected_number_of_participants">Expected Number of Participants</string>
+    <string name="event_convener">Event Convener</string>
+
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="no_account_sign_up">No Account ? Sign up</string>
+    <string name="my_projects">My Projects</string>
+    <string name="interactive_feed">Interactive Feed</string>
+    <string name="rsn_podcast">RSN Podcast</string>
+    <string name="rsn_events">RSN Events</string>
+    <string name="thank_you">Thank you for completing the survey</string>
+    <string name="add_a_picture">Add a Picture</string>
+    <string name="title">Title?</string>
+    <string name="what_do_you_want_to_talk_about">What do you want to talk about?</string>
+    <string name="post">Post</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="set_profile_photo">Set Profile Photo</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="gender">Gender</string>
+    <string name="organisation">Organisation</string>
+    <string name="country">Country</string>
+    <string name="designation">Designation</string>
+    <string name="submit">Submit</string>
+    <string name="challenges">Challenges</string>
+    <string name="partial">Partial</string>
+    <string name="high">High</string>
+
+    <string name="q1_constellation_of_participants">Q1. Constellation of Participants</string>
+    <string name="please_indicate_number_of">Please indicate Number of:</string>
+    <string name="women">Women</string>
+    <string name="youth">Youth</string>
+    <string name="no">No</string>
+    <string name="if_yes_which_policy_ies">If yes, which policy(ies)?</string>
+    <string name="policies">Policies</string>
+    <string name="survey">Survey</string>
+    <string name="benefits">benefits</string>
+
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="already_registered_login">already registered ? Login</string>
+    <string name="write_a_post">Write a post</string>
+    <string name="likes">Likes</string>
+    <string name="fill_report">Fill Report</string>
+    <string name="our_events">Our Events</string>
+    <string name="browse_events">Browse Events</string>
+    <string name="our_projects">Our Projects</string>
+    <string name="browse_projects">Browse Projects</string>
+    <string name="surveys">Surveys</string>
+    <string name="view_a_survey">View a Survey</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="could_not_login">Couldn\'t login, User not found</string>
+    <string name="complete_all_fields">Complete all fields</string>
+    <string name="processing">PROCESSING....</string>
+    <string name="not_registered">User not registered!</string>
+    <string name="please_login">please login</string>
+    <string name="please_turn_gps">Please turn on GPS</string>
     <string-array name="partners">
         <item>EED</item>
         <item>ECRC</item>

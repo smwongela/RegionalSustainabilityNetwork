@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionOne;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -72,6 +73,7 @@ public class EventFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if (currentUser == null) {
 
             Intent loginIntent = new Intent(context, RegisterActivity.class);
@@ -86,7 +88,7 @@ public class EventFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-
+        String userID=mAuth.getCurrentUser().getUid();
         FloatingActionButton fab = (FloatingActionButton) context.findViewById(R.id.fabEvent);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +125,23 @@ public class EventFragment extends Fragment {
                                     final String convener = snapshot.child("organisation").getValue().toString();
                                     final String type = snapshot.child("eventType").getValue().toString();
                                     final String date = snapshot.child("eventDate").getValue().toString();
+                                    final String postedBy= snapshot.child("postedBy").getValue().toString();
+                                    if (userID.equals(postedBy)) {
+
+                                        holder.fill_report.setVisibility(View.VISIBLE);
+                                        holder.fill_report.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent reportIntent = new Intent(context, QuestionOne.class);
+                                                reportIntent.putExtra("EventID",post_key);
+                                                reportIntent.putExtra("EventName",event);
+                                                startActivity(reportIntent);
+                                            }
+                                        });
+
+                                    }else if(!userID.equals(postedBy)){
+                                        holder.fill_report.setVisibility(View.INVISIBLE);
+                                    }
                                     holder.event_venue.setText(venue);
                                     Picasso.with(getContext()).load(photo).resize(200,200)
                                          .transform(new CropCircleTransformation())
@@ -216,6 +235,7 @@ public class EventFragment extends Fragment {
         public TextView event_type;
         public TextView event_date;
         public LinearLayout changingLayout;
+        public TextView fill_report;
 
         public EventViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -228,8 +248,11 @@ public class EventFragment extends Fragment {
             event_type=itemView.findViewById(R.id.text_view_event_type);
             event_date=itemView.findViewById(R.id.text_view_date);
             changingLayout=itemView.findViewById(R.id.linear_layout);
+            fill_report=itemView.findViewById(R.id.fill_report);
+            fill_report.setVisibility(View.INVISIBLE);
 
         }
+
         public void setCard() {
             //  size = adapter.getItemCount();
             final int position = getAdapterPosition();

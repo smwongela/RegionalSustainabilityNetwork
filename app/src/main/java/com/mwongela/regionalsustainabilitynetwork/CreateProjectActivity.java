@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -255,6 +256,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         }
 
         if (valid) {
+            Toast.makeText(CreateProjectActivity.this, R.string.processing, Toast.LENGTH_LONG).show();
             final DatabaseReference newProject = databaseRef.push();
             //adding post contents to database reference
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {

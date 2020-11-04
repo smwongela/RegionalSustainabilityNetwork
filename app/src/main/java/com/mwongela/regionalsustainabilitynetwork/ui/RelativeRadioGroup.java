@@ -1,4 +1,4 @@
-package com.mwongela.regionalsustainabilitynetwork;
+package com.mwongela.regionalsustainabilitynetwork.ui;
 
 
 import android.content.Context;

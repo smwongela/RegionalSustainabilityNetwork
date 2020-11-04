@@ -52,7 +52,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="7dp"
-             android:text="Write a post"
+             android:text="@string/write_a_post"
             android:gravity="center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="#ffffff"

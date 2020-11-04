@@ -6,6 +6,14 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:background="@color/greenDark"
     android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="330dp"
@@ -60,7 +68,7 @@
 
                     />
                 
-              <com.mwongela.regionalsustainabilitynetwork.RelativeRadioGroup
+              <com.mwongela.regionalsustainabilitynetwork.ui.RelativeRadioGroup
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
 
@@ -124,7 +132,7 @@
                       android:layout_height="wrap_content"
                       android:text="Disagree" />
 
-              </com.mwongela.regionalsustainabilitynetwork.RelativeRadioGroup>
+              </com.mwongela.regionalsustainabilitynetwork.ui.RelativeRadioGroup>
                 
                 
 
@@ -134,7 +142,7 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"/>
 
                 <RelativeLayout
@@ -145,7 +153,7 @@
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fabQ3"
+                        android:id="@+id/fabCan1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -172,3 +180,5 @@
 
             </LinearLayout>
         </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

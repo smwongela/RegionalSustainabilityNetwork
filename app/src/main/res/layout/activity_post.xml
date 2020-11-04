@@ -59,7 +59,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="1dp"
                 android:fontFamily="sans-serif-light"
-                android:text="Add a Picture"
+                android:text="@string/add_a_picture"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/white" />
             <com.google.android.material.textfield.TextInputLayout
@@ -72,7 +72,7 @@
                     android:layout_marginLeft="-4dp"
                     android:layout_marginRight="-4dp"
                     android:id="@+id/textTitle"
-                    android:hint="Title?"
+                    android:hint="@string/title"
                     android:inputType="text"
                     android:maxLength="50"
                     android:maxLines="1"
@@ -92,7 +92,7 @@
                     android:layout_marginLeft="-4dp"
                     android:layout_marginRight="-4dp"
                     android:id="@+id/textDesc"
-                    android:hint="What do you  want  to talk about?"
+                    android:hint="@string/what_do_you_want_to_talk_about"
                     android:inputType="text"
                     android:maxLength="50"
                     android:maxLines="10"
@@ -127,7 +127,7 @@
                 android:background="@drawable/button_2"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Post"/>
+                android:text="@string/post"/>
 
         </LinearLayout>
     </ScrollView>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+
+        android:background="@color/greenDark"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/greenDark">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewImage"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="4dp">
+
+        <ImageView
+            android:id="@+id/partnerLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/can" />
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/survey_convener"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_marginStart="10dp"
+            android:text="Cadim"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/survey_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/survey_convener"
+            android:text="Nairobi"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_post"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:background="@color/greenDark"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:id="@+id/event_survey_image"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/event_survey_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:textColor="#ffffff"
+                android:text="Event Name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

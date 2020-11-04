@@ -127,81 +127,9 @@ public class BlogDisplayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent articulate = new Intent(BlogDisplayActivity.this, PostActivity.class);
                 startActivity(articulate);
-         /*
 
-                LocationRequest locationRequest = LocationRequest.create();
-                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                        .addLocationRequest(locationRequest);
-                Task<LocationSettingsResponse> result =
-                        LocationServices.getSettingsClient(BlogDisplayActivity.this).checkLocationSettings(builder.build());
-                result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
-                    @Override
-                    public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
-                        try {
-                            LocationSettingsResponse response = task.getResult(ApiException.class);
-                            // All location settings are satisfied. The client can initialize location
-                            // requests here.
-                        } catch (ApiException exception) {
-                            switch (exception.getStatusCode()) {
-                                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                                    // Location settings are not satisfied. But could be fixed by showing the
-                                    // user a dialog.
-                                    try {
-                                        // Cast to a resolvable exception.
-                                        ResolvableApiException resolvable = (ResolvableApiException) exception;
-                                        // Show the dialog by calling startResolutionForResult(),
-                                        // and check the result in onActivityResult().
-                                        resolvable.startResolutionForResult(
-                                                BlogDisplayActivity.this,
-                                                LocationRequest.PRIORITY_HIGH_ACCURACY);
-                                    } catch (IntentSender.SendIntentException e) {
-                                        // Ignore the error.
-                                    } catch (ClassCastException e) {
-                                        // Ignore, should be an impossible error.
-                                    }
-                                    break;
-                                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                    // Location settings are not satisfied. However, we have no way to fix the
-                                    // settings so we won't show the dialog.
-                                    break;
-                            }
-                        }
-                    }
-                });
-
-                if(isContinue){
-                   Intent articulate = new Intent(BlogDisplayActivity.this, PostActivity.class);
-                   startActivity(articulate);
-
-                }
-
-
-
-          */
             }
         });
-        //check to see if the user is logged in
-       /* if (currentUser == null) {
-            // if user is not logged in refer him/he ro the register activity
-            Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
-            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(loginIntent);
-            // Listen to the events on the adapter
-
-        }*/
-        //get currently logged in user
-        //  FirebaseUser currentUser = mAuth.getCurrentUser();
-       /*
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (mAuth.getCurrentUser()==null){
-                    Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);startActivity(loginIntent);
-                }
-            }
-        };*/
 
     }
 
@@ -217,8 +145,6 @@ public class BlogDisplayActivity extends AppCompatActivity {
             adapter.startListening();
 
         }
-
-
 
     }
     private void updateUI(final FirebaseUser currentUser) {
@@ -306,7 +232,7 @@ public class BlogDisplayActivity extends AppCompatActivity {
                         if (user != null) {
                             currentUserID=user.getUid();
                         } else {
-                            Toast.makeText(BlogDisplayActivity.this,"please login",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BlogDisplayActivity.this, R.string.please_login,Toast.LENGTH_SHORT).show();
 
                         }
                         //Listen to changes in the likes database reference
@@ -438,7 +364,7 @@ public class BlogDisplayActivity extends AppCompatActivity {
             if (user != null) {
                 currentUserID = user.getUid();
             } else {
-                Toast.makeText(BlogDisplayActivity.this,"please login",Toast.LENGTH_SHORT).show();
+                Toast.makeText(BlogDisplayActivity.this,R.string.please_login,Toast.LENGTH_SHORT).show();
             }
 
             //mAuth = FirebaseAuth.getInstance();
@@ -500,19 +426,7 @@ public class BlogDisplayActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == AppConstants.GPS_REQUEST) {
-                isGPS = true; // flag maintain before get location
-                isContinue=true;
-            }
-        }
-    }*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -528,7 +442,7 @@ public class BlogDisplayActivity extends AppCompatActivity {
                     case Activity.RESULT_CANCELED:
                         // The user was asked to change settings, but chose not to
                         //Log.i(TAG, "onActivityResult: User rejected GPS request");
-                        Toast.makeText(BlogDisplayActivity.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BlogDisplayActivity.this, R.string.please_turn_gps, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(intent);
 

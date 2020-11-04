@@ -17,17 +17,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CealOne"></activity>
-        <activity android:name=".CadimOne" />
-        <activity android:name=".CanOne" />
-        <activity android:name=".QuestionFive" />
-        <activity android:name=".QuestionThree" />
-        <activity android:name=".QuestionOne" />
-        <activity android:name=".CreateProjectActivity" />
-        <activity android:name=".SinglePostActivity" />
+        <activity android:name=".NoFutherQuestions"></activity>
+        <activity android:name=".SingleEventActivity" />
+        <activity android:name=".can.CanSeven" />
+        <activity android:name=".can.CanSix" />
+        <activity android:name=".can.CanFive" />
+        <activity android:name=".can.CanFour" />
+        <activity android:name=".can.CanThree" />
+        <activity android:name=".can.CanTwo" />
+        <activity
+            android:name=".rsn.QuestionFour"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rsn.QuestionTwo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CealOne"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CadimOne"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".can.CanOne"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rsn.QuestionFive"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rsn.QuestionThree"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rsn.QuestionOne"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateProjectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SinglePostActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PostActivity"
-            android:parentActivityName=".BlogDisplayActivity">
+            android:parentActivityName=".BlogDisplayActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BlogDisplayActivity" />
@@ -35,18 +66,24 @@
         <activity android:name=".BlogDisplayActivity" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/rsn" />
+            android:label="@string/rsn"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/rsn" />
+            android:label="@string/rsn"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/rsn" />
+            android:label="@string/rsn"
+            android:screenOrientation="portrait" />
         <activity android:name=".EventActivity" />
         <activity
             android:name=".ProjectActivity"
-            android:label="@string/rsn" />
-        <activity android:name=".MainActivity">
+            android:label="@string/rsn"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
