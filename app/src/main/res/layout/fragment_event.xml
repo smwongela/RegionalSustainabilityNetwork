@@ -44,6 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:clickable="true"
         android:layout_margin="16dp"
-        android:src="@drawable/pushpin" />
+        android:src="@drawable/pushpin"
+        android:focusable="true" />
 </RelativeLayout>

@@ -2,29 +2,41 @@
 <androidx.cardview.widget.CardView android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+    android:layout_margin="1dp"
 
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:background="#000000"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+
+       android:background="@color/greenDark"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/yellow_green"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
+            android:background="@color/greenDark"
             android:paddingBottom="10dp">
 
-                                <ImageView
-                        android:id="@+id/userImage"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/wood" />
+
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/circular_bordershape"
+                android:contentDescription="@string/todo" />
 
             <TextView
                 android:id="@+id/post_user"
@@ -32,129 +44,143 @@
 
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/userImage"
-
+                 android:layout_marginStart="5dp"
                 android:fontFamily="serif"
                 android:gravity="end"
-                android:text="Stanslaus"
+                android:text="@string/stanslaus"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
                 android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/post_user"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/userImage"
+                >
 
             <TextView
-                android:id="@+id/textview_location"
+                android:id="@+id/textView_organisation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-
-                android:layout_toEndOf="@id/post_user"
-                android:text="Nairobi"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:text="Cadim"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
-
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/textView_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textview_location"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_toRightOf="@id/userImage"
-                android:text="time"
-                android:textColor="#ffffff" />
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:text="Ghana"
+                android:textColor="@color/yellow_color"
+                 />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/textView_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textview_location"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_toRightOf="@id/time"
-                android:text="date"
-                android:textColor="#ffffff" />
+                     android:textSize="12sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:text="@string/date"
+                android:textColor="#ffffff"
+                />
+           </LinearLayout>
 
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/linear_layout_post"
-            android:orientation="vertical"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:background="#000000"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:background="@color/greenDark"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/progress"
+                android:layout_height="wrap_content">
+
 
             <ImageView
+                android:id="@+id/post_image"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:id="@+id/post_image"
-                android:scaleType="centerCrop"/>
+                android:contentDescription="@string/todo"
+                android:scaleType="centerCrop" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/post_title_txtview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:text="@string/post_title"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:text="Post Title"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/post_desc_txtview"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="#ffffff"
-                android:text="Post Description"/>
+                android:text="@string/post_description"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+             android:background="@color/greenDark"
+            android:paddingBottom="20dp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/like_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="#000000"
-                android:src="@drawable/dislike"/>
+                android:background="@color/greenDark"
+                app:srcCompat="@drawable/dislike"
+                android:contentDescription="@string/todo" />
+
             <TextView
                 android:id="@+id/likes_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#ff0000"
                 android:padding="5dp"
-                android:text="0"
+                android:text="@string/zero"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#ff0000"
                 android:text="@string/likes"
-                />
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <ImageButton
-                android:background="#000000"
-                android:padding="15dp"
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/greenDark"
+                android:contentDescription="@string/todo"
 
-
-                android:src="@drawable/comment"/>
+                android:padding="15dp"
+                app:srcCompat="@drawable/comment" />
 
 
         </LinearLayout>
-
-
-
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

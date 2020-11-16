@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Locale;
 public class FetchAddressTask extends AsyncTask<Location,Void,String> {
     public final String TAG = FetchAddressTask.class.getSimpleName();
-    public Context mContext;
+    public final Context mContext;
 
-    public onTaskCompleted mListener;
+    public final onTaskCompleted mListener;
     //EMPTY CONSTRUCTOR
 
     public FetchAddressTask(Context applicationContext, onTaskCompleted listener){

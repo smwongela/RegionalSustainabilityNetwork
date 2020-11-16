@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/greenDark"
     tools:context=".NoFutherQuestions">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight="1"
+
         android:background="@color/greenDark"
         android:orientation="vertical" android:padding="@dimen/spacing_large">
 
         <androidx.cardview.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_outer"
-            android:layout_width="250dp"
-            android:layout_height="160dp"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             card_view:cardBackgroundColor="@android:color/transparent"
             card_view:cardCornerRadius="0dp"
             card_view:cardElevation="3dp" >
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewImage"
-                android:layout_width="250dp"
-                android:layout_height="160dp"
+                android:layout_width="150dp"
+                android:layout_height="90dp"
 
                 card_view:cardCornerRadius="4dp"
                 card_view:cardElevation="0dp"
@@ -36,7 +36,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/rsn_modified" />
+                    android:src="@drawable/rsn_modified"
+                    android:contentDescription="@string/todo" />
 
             </androidx.cardview.widget.CardView>
 
@@ -56,12 +57,17 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Exit"
-        android:textColor="#ffff00"
-        android:background="@drawable/action_button_style"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:layout_margin="70dp"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:text="@string/exit"
+        android:onClick="launchMainActivity"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/greenDark"
+        android:background="@drawable/button_2"
+        android:layout_gravity="center"
+        android:focusable="true" />
+</RelativeLayout>

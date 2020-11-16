@@ -2,7 +2,6 @@ package com.mwongela.regionalsustainabilitynetwork;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionOne;
 import com.squareup.picasso.Picasso;
 
 
@@ -37,13 +35,13 @@ import com.squareup.picasso.Picasso;
 public class ReportFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference surveyRef;
-    private FirebaseAuth mAuth;
     // private FirebaseUser mCurrentUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     Boolean likeChecker = false;
     //  private FirebaseRecyclerAdapter adapter;
     String currentUserID = null;
     private EventModel eventModel;
+
     public ReportFragment() {
         // Required empty public constructor
     }
@@ -55,7 +53,7 @@ public class ReportFragment extends Fragment {
                              Bundle savedInstanceState) {
         context = getActivity();
         //initialize recyclerview
-        View rootView=inflater.inflate(R.layout.fragment_report, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_report, container, false);
         recyclerView = rootView.findViewById(R.id.recycler_reports);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
         //Reverse  the layout so as to display the most recent post at the top
@@ -69,7 +67,7 @@ public class ReportFragment extends Fragment {
         // Inflate the layout for this fragment
         //get an instance of firebase authentication
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
@@ -81,19 +79,11 @@ public class ReportFragment extends Fragment {
         //reportsRef= FirebaseDatabase.getInstance().getReference().child("Projects");
         return rootView;
     }
+
     @Override
     public void onStart() {
         super.onStart();
 
-
-        FloatingActionButton fab= (FloatingActionButton) context.findViewById(R.id.createProject);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent createProject = new Intent(context, CreateProjectActivity.class);
-                startActivity(createProject);
-            }
-        });
 
         FirebaseRecyclerOptions<EventModel> options =
                 new FirebaseRecyclerOptions.Builder<EventModel>()
@@ -108,6 +98,14 @@ public class ReportFragment extends Fragment {
                         // final int position = getAdapterPosition();
                         // holder.setCard();
                         //eventsRef.child(post_key).addValueEventListener
+                        holder.surveyLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent singleLayout = new Intent(context, SingleSurvey.class);
+                                singleLayout.putExtra("PostKey", post_key);
+                                startActivity(singleLayout);
+                            }
+                        });
 
                         surveyRef.child(post_key).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -119,88 +117,46 @@ public class ReportFragment extends Fragment {
                                     final String projectConvener = snapshot.child("organisation").getValue().toString();
                                     final String surveyLocation = snapshot.child("location").getValue().toString();
                                     final String surveyImage = snapshot.child("eventPhoto").getValue().toString();
-
+                                   final String day= snapshot.child("date").getValue().toString();
 
 
                                     Picasso.with(getContext()).load(surveyImage).into(holder.survey_image);
                                     holder.survey_name.setText(surveyName);
                                     holder.survey_location.setText(surveyLocation);
                                     holder.survey_convener.setText(projectConvener);
-
-                                    /*Glide.with(getContext()).load(photo)
-                                            .bitmapTransform(new BlurTransformation(context))
-                                            .into((holder.profile_image);
-
-                                                            */
-                                    //Glide.with(getContext()).load(photo).into(holder.profile_image);
+                                    holder.surveyDate.setText(day);
 
 
+                                    if (projectConvener.equalsIgnoreCase("Hanns Seidel")) {
+                                        Picasso.with(getContext()).load(R.drawable.seidel).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+
+                                    if (projectConvener.equalsIgnoreCase("CADIM")) {
+                                        Picasso.with(getContext()).load(R.drawable.cadim).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("EED")) {
+                                        Picasso.with(getContext()).load(R.drawable.eed_logo).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("CAN")) {
+                                        Picasso.with(getContext()).load(R.drawable.can).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("CEAL")) {
+                                        Picasso.with(getContext()).load(R.drawable.ceal2).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("Urbis")) {
+                                        Picasso.with(getContext()).load(R.drawable.urbis).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("Champions")) {
+                                        Picasso.with(getContext()).load(R.drawable.champions_logo).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("DRFN")) {
+                                        Picasso.with(getContext()).load(R.drawable.drfn_logo).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
+                                    if (projectConvener.equalsIgnoreCase("SOS")) {
+                                        Picasso.with(getContext()).load(R.drawable.sos_logo).resize(600, 200).centerInside().into(holder.partner_logo);
+                                    }
 
 
-
-                                    if(projectConvener.equalsIgnoreCase("CADIM")) {
-                                        Picasso.with(getContext()).load(R.drawable.cadim).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("EED")) {
-                                        Picasso.with(getContext()).load(R.drawable.eed_logo).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("CAN")) {
-                                        Picasso.with(getContext()).load(R.drawable.can).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("CEAL")) {
-                                        Picasso.with(getContext()).load(R.drawable.ceal2).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("Urbis")) {
-                                        Picasso.with(getContext()).load(R.drawable.urbis).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("Champions")) {
-                                        Picasso.with(getContext()).load(R.drawable.champions_logo).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("DRFN")) {
-                                        Picasso.with(getContext()).load(R.drawable.drfn_logo).into(holder.partner_logo);
-                                    }
-                                    if(projectConvener.equalsIgnoreCase("SOS")) {
-                                        Picasso.with(getContext()).load(R.drawable.sos_logo).into(holder.partner_logo);
-                                    }
-                                    //<item>EED</item>
-                                    //        <item>ECRC</item>
-                                    //        <item>KCIC</item>
-                                    //        <item>DRFN</item>
-                                    //        <item>CEAL</item>
-                                    //        <item>CADIM</item>
-                                    //        <item>CAN</item>
-                                    //        <item>Urbis</item>
-                                    //        <item>Champions</item>
-                                    //        <item>Hanns Seidel </item>
-                                    /*
-
-
-                                    }
-                                    /*
-                                    if(convener.equalsIgnoreCase("CAN")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.blue_sticky);
-                                    }
-                                    if(convener.equalsIgnoreCase("CEAL")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.purple_stickky);
-                                    }
-                                    if(convener.equalsIgnoreCase("Urbis")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stick1);
-                                    }
-                                    if(convener.equalsIgnoreCase("Hanns Seidel")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.blue_sticky);
-                                    }
-                                    if(convener.equalsIgnoreCase("EED")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.purple_stickky);
-                                    }
-                                    if(convener.equalsIgnoreCase("KCIC")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stickgreen);
-                                    }
-                                    if(convener.equalsIgnoreCase("Champions")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stick1);
-                                    }
-                                    if(convener.equalsIgnoreCase("DRFN")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stickgreen);
-                                    }*/
                                 }
 
                             }
@@ -218,71 +174,38 @@ public class ReportFragment extends Fragment {
                     public ReportFragment.ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.survey_card_item, parent, false);
 
-                        return new ReportFragment.ProjectViewHolder(view);
+                        return new ProjectViewHolder(view);
                     }
                 };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
 
-    public class ProjectViewHolder extends RecyclerView.ViewHolder{
+    public static class ProjectViewHolder extends RecyclerView.ViewHolder {
         //Declare the view objects in the card view
-        public ImageView partner_logo;
-        public TextView survey_convener;
-        public  TextView survey_location;
-        public ImageView survey_image;
-        public  TextView survey_name;
+        public final ImageView partner_logo;
+        public final TextView survey_convener;
+        public final TextView survey_location;
+        public final ImageView survey_image;
+        public final TextView survey_name;
+        public final TextView surveyDate;
 
-        public LinearLayout changingLayout;
+
+
+        public LinearLayout surveyLayout;
 
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
-            //Initialize the card view item objects
-            //profile_image=itemView.findViewById(R.id.userImage);
-             partner_logo=itemView.findViewById(R.id.partnerLogo);
-             survey_convener=itemView.findViewById(R.id.survey_convener);
-             survey_location=itemView.findViewById(R.id.survey_location);
-             survey_image=itemView.findViewById(R.id.event_survey_image);
-             survey_name=itemView.findViewById(R.id.event_survey_name);
 
-                                        /*
-                                    }
-                                    if(convener.equalsIgnoreCase("CEAL")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.purple_stickky);
-                                    }
-                                    if(convener.equalsIgnoreCase("Urbis")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stick1);
-                                    }
-                                    if(convener.equalsIgnoreCase("Hanns Seidel")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.blue_sticky);
-                                    }
-                                    if(convener.equalsIgnoreCase("EED")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.purple_stickky);
-                                    }
-                                    if(convener.equalsIgnoreCase("KCIC")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stickgreen);
-                                    }
-                                    if(convener.equalsIgnoreCase("Champions")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stick1);
-                                    }
-                                    if(convener.equalsIgnoreCase("DRFN")){
-                                        holder.changingLayout.setBackgroundResource(R.drawable.stickgreen);
-                                    }*/
-
-        }
-        public void setCard() {
-            //  size = adapter.getItemCount();
-            final int position = getAdapterPosition();
+            partner_logo = itemView.findViewById(R.id.partnerLogo);
+            survey_convener = itemView.findViewById(R.id.survey_convener);
+            survey_location = itemView.findViewById(R.id.survey_location);
+            survey_image = itemView.findViewById(R.id.event_survey_image);
+            survey_name = itemView.findViewById(R.id.event_survey_name);
+            surveyLayout = itemView.findViewById(R.id.surveyLayout);
+            surveyDate=itemView.findViewById(R.id.survey_date);
 
 
-            if (position == 0) {
-
-                changingLayout.setBackgroundResource(R.drawable.greencard2);
-
-            }
-            if (position == 1) {
-                changingLayout.setBackgroundResource(R.drawable.stickgreen);
-            }
 
         }
 

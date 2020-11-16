@@ -31,15 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/africa_rsn" />
+                android:src="@drawable/africa_rsn"
+                android:contentDescription="@string/todo" />
         </androidx.cardview.widget.CardView>
 
-        <ImageView
-            android:id="@+id/myLogo"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="65dp"
-            android:src="@drawable/kali" />
+
 
         <LinearLayout
 
@@ -47,13 +43,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
-            android:layout_toRightOf="@id/myLogo"
+            android:layout_toEndOf="@id/cardViewImage"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Regional"
+                android:text="@string/regional"
                 android:textColor="@color/Green"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -61,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sustainability"
+                android:text="@string/sustainability"
                 android:textColor="@color/yellow_green"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -69,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Network"
+                android:text="@string/network"
                 android:textColor="@color/Green"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -83,7 +79,6 @@
         android:id="@+id/cards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
          android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -97,6 +92,7 @@
             android:id="@+id/cardViewPartner"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:clickable="true"
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="3dp"
             android:layout_marginStart="12dp"
@@ -116,10 +112,10 @@
                     android:layout_height="100dp"
                     android:adjustViewBounds="true"
                     android:paddingBottom="5dp"
-                    android:src="@drawable/tree_info" />
+                    android:src="@drawable/tree_info"
+                    android:contentDescription="@string/todo" />
 
                 <TextView
-                    android:id="@+id/project_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/project_image"
@@ -144,7 +140,7 @@
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="3dp"
 
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintLeft_toRightOf="@id/cardViewPartner"
@@ -164,10 +160,10 @@
                     android:adjustViewBounds="true"
 
                     android:paddingBottom="5dp"
-                    android:src="@drawable/green_blog" />
+                    android:src="@drawable/green_blog"
+                    android:contentDescription="@string/todo" />
 
                 <TextView
-                    android:id="@+id/Blog_Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Blog_Feed"
@@ -186,8 +182,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewEvent"
+            android:id="@+id/cardViewEvents"
             android:layout_width="150dp"
+            android:clickable="true"
             android:layout_height="150dp"
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="3dp"
@@ -198,7 +195,8 @@
 
             app:layout_constraintLeft_toRightOf="@id/cardViewPodCast"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewBlog">
+            app:layout_constraintTop_toBottomOf="@id/cardViewBlog"
+            android:focusable="true">
 
 
             <RelativeLayout
@@ -211,8 +209,9 @@
                     android:layout_height="100dp"
                     android:adjustViewBounds="true"
 
-                    android:paddingBottom="5dp"
+                    android:contentDescription="@string/todo"
 
+                    android:paddingBottom="5dp"
                     android:src="@drawable/calender3" />
 
                 <TextView
@@ -243,6 +242,7 @@
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="3dp"
             android:layout_marginStart="8dp"
+            android:clickable="true"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -258,10 +258,10 @@
                     android:layout_height="100dp"
                     android:adjustViewBounds="true"
                     android:paddingBottom="5dp"
-                    android:src="@drawable/green_pod" />
+                    android:src="@drawable/green_pod"
+                    android:contentDescription="@string/todo" />
 
                 <TextView
-                    android:id="@+id/podCast_Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/podCast_image"
@@ -278,7 +278,8 @@
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

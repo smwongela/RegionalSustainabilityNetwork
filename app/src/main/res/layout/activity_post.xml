@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/greenDark"
+    android:id="@+id/display"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.Toolbar
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_alignParentTop="true"
-        android:background="#000000"
+        android:background="@color/greenDark"
 
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:logo="@mipmap/ic_rsn_africa"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#000000"
+            android:background="@color/greenDark"
             tools:context=".PostActivity">
             <!--
            <ImageView
@@ -49,9 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:clickable="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/add_photo"
-                />
+                android:src="@drawable/add_image"
+                android:contentDescription="@string/todo"
+                android:focusable="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,8 +96,7 @@
                     android:layout_marginRight="-4dp"
                     android:id="@+id/textDesc"
                     android:hint="@string/what_do_you_want_to_talk_about"
-                    android:inputType="text"
-                    android:maxLength="50"
+                    android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:singleLine="true"
                     android:textColor="@color/grey_10"
@@ -109,7 +111,7 @@
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="kajiado"
+                android:text="@string/kajiado"
                 android:textColor="#fff"
                 android:layout_gravity="center"
                 android:visibility="invisible"
@@ -118,16 +120,18 @@
             <Button
                 android:layout_marginTop="30dp"
                 android:id="@+id/postBtn"
-                android:textColor="@color/black"
+                android:textColor="@color/greenDark"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_gravity="center"
                 android:textAllCaps="false"
+                android:clickable="true"
 
                 android:background="@drawable/button_2"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/post"/>
+                android:text="@string/post"
+                android:focusable="true" />
 
         </LinearLayout>
     </ScrollView>

@@ -9,28 +9,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut</item>
-    </style>
 
 
-    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">8dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-    </style>
     <style name="app_title">
         <item name="android:fontFamily">@font/centabel_book</item>
         <item name="android:textColor">@color/yellow_green</item>
         <item name="android:textSize">17sp</item>
     </style>
-    <style name="green_edit_text">
 
-        <item name="android:textColorHint">@color/greenLight</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
     <style name="EditText.White" parent="@style/AppTheme">
     <item name="colorControlActivated">@android:color/white</item>
     <item name="colorControlHighlight">@android:color/white</item>

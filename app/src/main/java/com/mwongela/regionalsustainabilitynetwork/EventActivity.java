@@ -7,12 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,28 +30,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.mwongela.regionalsustainabilitynetwork.utils.Tools;
+import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionTwo;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class EventActivity extends AppCompatActivity implements View.OnClickListener {
-    private ProgressBar progress_bar;
-    private FloatingActionButton fab;
-    private View parent_view;
-    private TextInputEditText event_date, participants, event_name, event_venue;
-    private int mYear, mMonth, mDay;
 
-    private ArrayAdapter eventTypeAdapterForSpinner, convenerAdapterForSpinner;
+    private TextInputEditText event_date, participants, event_name, event_venue;
+
     private TextInputEditText eventType_input;
     private TextInputEditText convener_input;
 
     private Spinner spinnerEventType;
     private Spinner spinnerConvener;
 
-    //Declare an Instance of the Storage reference where we will upload the post photo
-    private StorageReference mStorageRef;
     //Declare an Instance of the database reference  where we will be saving the post details
     private DatabaseReference databaseRef;
     //Declare an Instance of firebase authentication
@@ -59,15 +54,17 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mDatabaseUsers;
     //Declare a Instance of currently logged in user
     private FirebaseUser mCurrentUser;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-        parent_view = findViewById(android.R.id.content);
-        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        View parent_view = findViewById(android.R.id.content);
+
+
         event_date = (TextInputEditText) findViewById(R.id.event_date);
         participants = (TextInputEditText) findViewById(R.id.numberOfParticipants);
 
@@ -79,8 +76,15 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         spinnerConvener = (Spinner) findViewById(R.id.spinner_convener);
         convener_input = findViewById(R.id.input_subject_convener);
 
-        //Initialize the storage reference
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(EventActivity.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         //Initialize the database reference/node where you will be storing posts
         databaseRef = FirebaseDatabase.getInstance().getReference().child("Events");
         //Initialize an instance of  Firebase Authentication
@@ -94,7 +98,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
         final String[] types = getResources().getStringArray(R.array.events);
 
-        eventTypeAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+        ArrayAdapter eventTypeAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
         eventTypeAdapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEventType.setAdapter(eventTypeAdapterForSpinner);
 
@@ -135,11 +139,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        //final Spinner spinnerCountry = (Spinner) findViewById(R.id.spinner_country);
-        //final TextInputEditText country_input = findViewById(R.id.input_subject_country);
         final String[] convener = getResources().getStringArray(R.array.partners);
 
-        convenerAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, convener);
+        ArrayAdapter convenerAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, convener);
         convenerAdapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerConvener.setAdapter(convenerAdapterForSpinner);
 
@@ -192,46 +194,27 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         });
 */
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                validate();
-            }
-        });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-/*
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (currentUser != null) {
 
 
-    private void dialogDatePickerLight(final TextInputEditText bt) {
-        Calendar cur_calender = Calendar.getInstance();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    validate();
+                }
+            });
 
-        DatePickerDialog datePicker = DatePickerDialog.newInstance(
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, monthOfYear);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    final long today = System.currentTimeMillis() - 1000;
-
-                    long date_ship_millis = calendar.getTimeInMillis();
-                    event_date.setText(Tools.getFormattedDateSimple(date_ship_millis));
-                },
-                cur_calender.get(Calendar.YEAR),
-                cur_calender.get(Calendar.MONTH),
-                cur_calender.get(Calendar.DAY_OF_MONTH)
-
-        );
-        //set dark light
-
-        datePicker.setThemeDark(false);
-        datePicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
-
-       datePicker.setMinDate(new GregorianCalendar().getTimeInMillis());
-        datePicker.show(getSupportFragmentManager(), "Datepickerdialog");
+        }
     }
-*/
 
     // Input Validation
     public void validate() {
@@ -306,9 +289,10 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         //launch the main activity after posting
-
-                                        Intent intent = new Intent(EventActivity.this, MainActivity.class);
+                                        progressBar.setVisibility(View.GONE);
+                                        Intent intent = new Intent(EventActivity.this, ProjectActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
                             });
@@ -324,22 +308,35 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     @Override
     public void onClick(View v) {
         if (v == event_date) {
             //6.2 Declare a calender to get current selected  date
             final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
             //6.3 use the date picker dialog, declare a new datapicker dialog
             android.app.DatePickerDialog datePickerdialog = new android.app.DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     //6.4 Set the date to the edit text
 
-                    event_date.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, dayOfMonth);
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy ");
+
+                    String dateString = dateFormat.format(calendar.getTime());
+
+
+
+
+
+
+                    event_date.setText(dateString);
+
+                                       // event_date.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                 }
             }, mYear, mMonth, mDay);
             //6.5 Show the date picker dialog

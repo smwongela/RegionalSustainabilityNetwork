@@ -10,18 +10,28 @@
     <application
         android:name=".FirebaseHandler"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:hardwareAccelerated="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_rsn_africa"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NoFutherQuestions"></activity>
+        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".ceal.CealFour" />
+        <activity android:name=".ceal.CealThree" />
+        <activity android:name=".ceal.CealTwo" />
+        <activity android:name=".cadim.CadimFour" />
+        <activity android:name=".cadim.CadimThree" />
+        <activity android:name=".cadim.CadimTwo" />
+        <activity android:name=".SingleSurvey" />
+        <activity android:name=".SingleProjectActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".NoFutherQuestions" />
         <activity android:name=".SingleEventActivity" />
-        <activity android:name=".can.CanSeven" />
-        <activity android:name=".can.CanSix" />
-        <activity android:name=".can.CanFive" />
         <activity android:name=".can.CanFour" />
         <activity android:name=".can.CanThree" />
         <activity android:name=".can.CanTwo" />
@@ -32,10 +42,10 @@
             android:name=".rsn.QuestionTwo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CealOne"
+            android:name=".ceal.CealOne"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CadimOne"
+            android:name=".cadim.CadimOne"
             android:screenOrientation="portrait" />
         <activity
             android:name=".can.CanOne"

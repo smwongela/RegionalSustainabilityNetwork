@@ -4,10 +4,10 @@ public class Attic {
 
 
         //declare the variable
-        private String title, desc, postImage, displayName, profilePhoto, time, date, location;
+        private String title, desc, postImage, displayName, profilePhoto, time, date,organisation, country;
         //create a constructor
 
-        public Attic(String title, String desc, String postImage, String displayName, String profilePhoto, String time, String date, String location) {
+        public Attic(String title, String desc, String postImage, String displayName, String profilePhoto, String time, String date, String organisation, String country) {
             this.title = title;
             this.desc = desc;
             this.postImage = postImage;
@@ -15,7 +15,9 @@ public class Attic {
             this.profilePhoto = profilePhoto;
             this.time = time;
             this.date = date;
-            this.location = location;
+
+            this.organisation=organisation;
+            this.country=country;
         }
 
         //requires an empty constructor
@@ -51,8 +53,20 @@ public class Attic {
         public void setDate(String date) {
             this.date = date;
         }
+        public  void setCountry(String country){
+            this.country=country;
+        }
+        public  void setOrganisation(String organisation){
+            this.organisation=organisation;
+        }
 
         //getters
+    public  String getOrganisation(){
+            return organisation;
+    }
+    public  String getCountry(){
+            return country;
+    }
         public String getDisplayName() {
             return displayName;
         }
@@ -81,9 +95,7 @@ public class Attic {
             return date;
         }
 
-        public String getLocation() {
-            return location;
-        }
+
 
 
     }

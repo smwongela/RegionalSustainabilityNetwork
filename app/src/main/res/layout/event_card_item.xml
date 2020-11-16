@@ -4,21 +4,20 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/cardTest1"
-                android:layout_width="match_parent"
+    android:layout_width="match_parent"
                 android:layout_height="300dp"
 
                 android:layout_margin="8dp"
                 >
 
     <LinearLayout
-        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:background="@drawable/stickgreen"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginLeft="5dp">
 
         <!--
                     <ImageView
@@ -28,7 +27,6 @@
                         android:src="@drawable/pushpin"
                         />-->
         <View
-            android:id="@+id/view1"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -42,7 +40,9 @@
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
 
-            android:src="@drawable/wood" />
+            android:src="@drawable/circular_bordershape"
+            android:contentDescription="@string/todo"
+            android:layout_marginLeft="20dp" />
 
 
         <TextView
@@ -54,7 +54,8 @@
             android:text="@string/projectTitle"
             android:textColor="@color/navy_blue"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="50dp" />
 
         <TextView
             android:id="@+id/text_view_venue"
@@ -62,9 +63,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:fontFamily="@font/amsterdam"
-            android:text="Mwanza Social Hall"
+            android:text="@string/mwanza_social_hall"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_marginLeft="50dp" />
 
         <TextView
             android:id="@+id/text_view_country"
@@ -73,15 +75,16 @@
             android:layout_gravity="left"
             android:layout_marginStart="51dp"
             android:fontFamily="@font/amsterdam"
-            android:text="Tanzania"
-            android:textSize="12sp" />
+            android:text="@string/tanzania"
+            android:textSize="12sp"
+            android:layout_marginLeft="51dp" />
 
         <TextView
             android:id="@+id/text_view_partner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
-            android:text="CAN"
+            android:text="@string/can"
             android:textSize="12sp" />
         <RelativeLayout
         android:layout_width="340dp"
@@ -95,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="53dp"
                 android:fontFamily="@font/amsterdam"
-                android:text="Workshop"
+                android:text="@string/workshop"
                 android:textColor="@color/greenDark"
                 android:textSize="12sp" />
 
@@ -103,14 +106,16 @@
                 android:id="@+id/fill_report"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="59dp"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="58dp"
                 android:layout_toEndOf="@id/text_view_event_type"
-                android:background="@drawable/layout_special"
+                android:layout_toRightOf="@id/text_view_event_type"
+                android:background="@drawable/fill_report"
                 android:gravity="center_vertical"
-                android:text="@string/fill_report"
-                android:textColor="#ff0000"
 
-                android:textStyle="bold"
+                android:text="@string/fill_report"
+                android:textColor="#F7FF16"
+
                 card_view:drawableStartCompat="@drawable/ic_yellow_editor" />
         </RelativeLayout>
         <TextView
@@ -118,10 +123,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="54dp"
-            android:text="19th, March 2021"
+            android:text="@string/_19th_march_2021"
             android:textColor="@color/forest_green"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="54dp" />
     </LinearLayout>
 
 

@@ -6,19 +6,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,24 +46,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionOne;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
-public class PostActivity extends AppCompatActivity implements FetchAddressTask.onTaskCompleted{
+public class PostActivity extends AppCompatActivity {
     //Views
-    private TextView mLocationTextView;
-
-
-    //location classes
-    private Location mLastLocation;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private boolean mTrackingLocation;
-    private LocationCallback mLocationCallBack;
-    // Constants
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private static final String TRACKING_LOCATION_KEY = "tracking location";
 
 
 
@@ -75,8 +70,6 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
     private StorageReference mStorageRef;
     //Declare an Instance of the database reference  where we will be saving the post details
     private DatabaseReference databaseRef;
-    //Declare an Instance of firebase authentication
-    private FirebaseAuth mAuth;
     //Declare an Instance of the database reference  where we have user details
     private DatabaseReference mDatabaseUsers;
     //Declare a Instance of currently logged in user
@@ -88,98 +81,21 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
     // Declare an Instance of URI for getting the image from our phone, initialize it to null
     private Uri uri = null;
 
-    private boolean isContinue = false;
-    private boolean isGPS = false;
+   private TextView mLocationTextView;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
 
     @Override
     protected void onStart() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLocation();
+
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                validate();
 
 
-                Toast.makeText(PostActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
-                //get title and desc from the edit texts
-                final String PostTitle = textTitle.getText().toString().trim();
-                final String PostDesc = textDesc.getText().toString().trim();
-                final String mLocation=mLocationTextView.getText().toString().trim();
 
-                //get the date and time of the post
-
-                java.util.Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat currentDate=  new SimpleDateFormat("dd-MM-yyyy");
-                final String saveCurrentDate=currentDate.format(calendar.getTime());
-
-                java.util.Calendar calendar1 = Calendar.getInstance();
-                SimpleDateFormat currentTime=  new SimpleDateFormat("HH:mm");
-                final String  saveCurrentTime=currentTime.format(calendar1.getTime());
-
-
-                // do a check for empty fields
-                if (!TextUtils.isEmpty(PostDesc) && !TextUtils.isEmpty(PostTitle)) {
-
-                    //create Storage reference node, inside pOST_image storage reference where you will save the post image
-                    StorageReference filepath = mStorageRef.child("post_images").child(uri.getLastPathSegment());
-                    //call the putFile() method passing the post image the user set on the storage reference where you are uploading the image
-                    //further call addOnSuccessListener on the reference to listen if the upload task was successful,and get a snapshot of the task
-                    filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //if the upload of the post image was successful get the download url
-                            if (taskSnapshot.getMetadata() != null) {
-                                if (taskSnapshot.getMetadata().getReference() != null) {
-                                    //get the download url from your storage use the methods getStorage() and getDownloadUrl()
-                                    Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
-                                    //call the method addOnSuccessListener to determine if we got the download url
-                                    result.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            //convert the uri to a string on success
-                                            final String imageUrl = uri.toString();
-
-                                            Toast.makeText(getApplicationContext(), "Succesfully Uploaded", Toast.LENGTH_SHORT).show();
-                                            // call the method push() to add values on the database reference
-                                            final DatabaseReference newPost = databaseRef.push();
-                                            //adding post contents to database reference
-                                            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    newPost.child("title").setValue(PostTitle);
-                                                    newPost.child("desc").setValue(PostDesc);
-                                                    newPost.child("postImage").setValue(imageUrl);
-                                                    newPost.child("uid").setValue(mCurrentUser.getUid());
-                                                    newPost.child("time").setValue(saveCurrentTime);
-                                                    newPost.child("date").setValue(saveCurrentDate);
-                                                    newPost.child("location").setValue(mLocation);
-                                                    //get the profile photo and display name of the person posting
-                                                    newPost.child("profilePhoto").setValue(dataSnapshot.child("profilePhoto").getValue());
-                                                    newPost.child("displayName").setValue(dataSnapshot.child("displayName").getValue()).
-                                                            addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()){
-                                                                        //launch the main activity after posting
-                                                                        Intent intent = new Intent(PostActivity.this, MainActivity.class);
-                                                                        startActivity(intent);
-                                                                    }
-                                                                }
-                                                            });
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
-                }
             }
         });
 
@@ -190,7 +106,7 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        // mLocationTextView = findViewById(R.id.textview_location);
+        mLocationTextView = findViewById(R.id.location);
 
 
         //inflate the tool bar
@@ -201,8 +117,13 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
         postBtn = findViewById(R.id.postBtn);
         textDesc = findViewById(R.id.textDesc);
         textTitle = findViewById(R.id.textTitle);
-        mLocationTextView=findViewById(R.id.location);
 
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(PostActivity.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
 
 
 
@@ -211,7 +132,8 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
         //Initialize the database reference/node where you will be storing posts
         databaseRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         //Initialize an instance of  Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+        //Declare an Instance of firebase authentication
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
         mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
@@ -229,46 +151,7 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
         });
 
 
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        Task<LocationSettingsResponse> result =
-                LocationServices.getSettingsClient(PostActivity.this).checkLocationSettings(builder.build());
-        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
-            @Override
-            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
-                try {
-                    LocationSettingsResponse response = task.getResult(ApiException.class);
-                    // All location settings are satisfied. The client can initialize location
-                    // requests here.
-                } catch (ApiException exception) {
-                    switch (exception.getStatusCode()) {
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            // Location settings are not satisfied. But could be fixed by showing the
-                            // user a dialog.
-                            try {
-                                // Cast to a resolvable exception.
-                                ResolvableApiException resolvable = (ResolvableApiException) exception;
-                                // Show the dialog by calling startResolutionForResult(),
-                                // and check the result in onActivityResult().
-                                resolvable.startResolutionForResult(
-                                        PostActivity.this,
-                                        LocationRequest.PRIORITY_HIGH_ACCURACY);
-                            } catch (IntentSender.SendIntentException e) {
-                                // Ignore the error.
-                            } catch (ClassCastException e) {
-                                // Ignore, should be an impossible error.
-                            }
-                            break;
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            // Location settings are not satisfied. However, we have no way to fix the
-                            // settings so we won't show the dialog.
-                            break;
-                    }
-                }
-            }
-        });
+
 
 
 
@@ -282,60 +165,7 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
 
 
 
-    private void getLocation() {
-        /*
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        } else {
-            Log.d("TAG", "getLocation: permissions granted");
-        }*/
 
-        if (ActivityCompat.checkSelfPermission( PostActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(PostActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(PostActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    AppConstants.LOCATION_REQUEST);
-        }
-        mFusedLocationClient.getLastLocation().addOnSuccessListener(
-                new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Start the reverse geocode AsyncTask
-                        new FetchAddressTask(PostActivity.this,
-                                PostActivity.this).execute(location);
-                    }
-                });
-        mLocationTextView.setText(getString(R.string.address_text,
-                getString(R.string.loading),
-                System.currentTimeMillis()));
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_LOCATION_PERMISSION:
-                // If the permission is granted, get the location,
-                // otherwise, show a Toast
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getLocation();
-                } else {
-                    Toast.makeText(this,
-                            "location permission denied",
-                            Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onTaskCompleted(String result) {
-        //update ui
-        // mLocationTextView.setVisibility(true);
-        mLocationTextView.setText(getString(R.string.address_text,
-                result, System.currentTimeMillis()));
-
-
-    }
     @Override
     // image from gallery result
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -347,6 +177,159 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
             //set the image
             imageBtn.setImageURI(uri);
         }
+
+    }
+    private void validate() {
+        // mLocationTextView.setText(getString(R.string.time_post, System.currentTimeMillis()));
+        //  Toast.makeText(PostActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
+        boolean valid = true;
+        //get title and desc from the edit texts
+        final String PostTitle = textTitle.getText().toString().trim();
+        final String PostDesc = textDesc.getText().toString().trim();
+
+
+        //long millis=System.currentTimeMillis();
+        //java.util.Date date=new java.util.Date(millis);
+        //Date date=java.util.Calendar.getInstance().getTime();
+
+        Date date = new Date();
+
+        SimpleDateFormat DateFor = new SimpleDateFormat("E, dd MMM yyyy ");
+        final String stringDate = DateFor.format(date);
+
+        Date imageDate = new Date();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+
+
+        String postRandomName = dateFormat.format(imageDate);
+
+        //final String mTime=mLocationTextView.getText().toString().trim();
+
+
+        if (PostTitle.isEmpty()) {
+            textTitle.setError("Required");
+            progressBar.setVisibility(View.GONE);
+            valid = false;
+        } else {
+            textTitle.setError(null);
+        }
+        if (PostDesc.isEmpty()) {
+            progressBar.setVisibility(View.GONE);
+            textDesc.setError("Required");
+            valid = false;
+        } else {
+            textDesc.setError(null);
+        }
+
+
+        //get the date and time of the post
+
+
+        if (valid) {
+            // do a check for empty fields
+            final DatabaseReference newPost = databaseRef.push();
+            String imageUrl = null;
+            //create Storage reference node, inside pOST_image storage reference where you will save the post image
+            if(uri!=null) {
+                StorageReference filepath = mStorageRef.child("post_images").child(uri.getLastPathSegment() + postRandomName + ".jpg");
+
+
+                Bitmap bmp = null;
+                try {
+                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                assert bmp != null;
+                bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] data = baos.toByteArray();
+
+                UploadTask uploadTask2 = filepath.putBytes(data);
+
+                uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //if the upload of the post image was successful get the download url
+                        if (taskSnapshot.getMetadata() != null) {
+                            if (taskSnapshot.getMetadata().getReference() != null) {
+                                //get the download url from your storage use the methods getStorage() and getDownloadUrl()
+                                Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                                //call the method addOnSuccessListener to determine if we got the download url
+                                result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        //convert the uri to a string on success
+                                        String imageUrl = uri.toString();
+
+                                        Toast.makeText(getApplicationContext(), "Succesfully Uploaded", Toast.LENGTH_SHORT).show();
+                                        // call the method push() to add values on the database reference
+
+                                        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                newPost.child("postImage").setValue(imageUrl);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                });
+            }
+
+            //adding post contents to database reference
+            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    newPost.child("title").setValue(PostTitle);
+                    newPost.child("desc").setValue(PostDesc);
+                    newPost.child("uid").setValue(mCurrentUser.getUid());
+                    newPost.child("date").setValue(stringDate);
+                    newPost.child("organisation").setValue(dataSnapshot.child("organisation").getValue());
+                    newPost.child("country").setValue(dataSnapshot.child("Country").getValue());
+                    //get the profile photo and display name of the person posting
+                    newPost.child("profilePhoto").setValue(dataSnapshot.child("profilePhoto").getValue());
+                    newPost.child("displayName").setValue(dataSnapshot.child("displayName").getValue()).
+                            addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        //launch the main activity after posting
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(PostActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(PostActivity.this, BlogDisplayActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+
+    public void onBackPressed()
+    {
+        Intent myIntent=new Intent(PostActivity.this, BlogDisplayActivity.class);
+        startActivity(myIntent);
+        super.onBackPressed();  // optional depending on your needs
 
     }
 }

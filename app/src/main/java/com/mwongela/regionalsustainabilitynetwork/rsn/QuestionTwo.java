@@ -4,14 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,15 +21,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.mwongela.regionalsustainabilitynetwork.LoginActivity;
+import com.mwongela.regionalsustainabilitynetwork.ProfileActivity;
 import com.mwongela.regionalsustainabilitynetwork.R;
 
 public class QuestionTwo extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private FirebaseUser mCurrentUser;
     private DatabaseReference surveyRef,mDatabaseUsers;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
+
 
     private TextInputEditText benefits;
     String post_key = null;
@@ -42,7 +42,14 @@ public class QuestionTwo extends AppCompatActivity {
         benefits=findViewById(R.id.benefits);
         post_key = getIntent().getExtras().getString("PostKey");
         mAuth = FirebaseAuth.getInstance();
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(QuestionTwo.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
         if (currentUser == null) {
 
             Intent loginIntent = new Intent(QuestionTwo.this, LoginActivity.class);
@@ -52,7 +59,7 @@ public class QuestionTwo extends AppCompatActivity {
 
 
         //Initialize the instance of the firebase user
-        mCurrentUser = mAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         surveyRef = FirebaseDatabase.getInstance().getReference().child("Reports").child(post_key);
 
         //Get currently logged in user
@@ -71,6 +78,7 @@ public class QuestionTwo extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
                    validate();
                 }
             });
@@ -100,6 +108,7 @@ public class QuestionTwo extends AppCompatActivity {
                     surveyRef.child("QuestionTwo").child("benefits").setValue(eventBenefits).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
                             Intent next = new Intent(QuestionTwo.this, QuestionThree.class);
                             next.putExtra("PostKey",post_key);
                             startActivity(next);

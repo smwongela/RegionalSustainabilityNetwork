@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/display"
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/tools"
     android:background="@color/greenDark"
@@ -24,7 +25,6 @@
 
                 <androidx.cardview.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view_outer"
                     android:layout_width="180dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
@@ -44,7 +44,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY"
-                            android:src="@drawable/rsn_modified" />
+                            android:src="@drawable/rsn_modified"
+                            android:contentDescription="@string/todo" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/spacing_medium"
-                    android:text="Survey"
+                    android:text="@string/survey"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Display2"
                     android:textColor="@android:color/white" />
 
@@ -78,7 +79,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
                     android:theme="@style/EditText.White.Hint">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -119,7 +120,8 @@
                         app:backgroundTint="@android:color/white"
                         app:fabSize="normal"
                         app:rippleColor="@color/cyan_800"
-                        app:srcCompat="@drawable/ic_arrow_right" />
+                        app:srcCompat="@drawable/ic_arrow_right"
+                        android:focusable="true" />
 
                     <ProgressBar
                         android:id="@+id/progress_bar"

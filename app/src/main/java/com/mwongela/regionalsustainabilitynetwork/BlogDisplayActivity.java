@@ -3,16 +3,16 @@ package com.mwongela.regionalsustainabilitynetwork;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,21 +21,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.transition.Hold;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,21 +46,20 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class BlogDisplayActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private DatabaseReference likesRef,mDatabaseUsers;
+    private DatabaseReference likesRef, postsRef;
     private FirebaseAuth mAuth;
-    private FirebaseUser mCurrentUser;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     Boolean likeChecker =false;
     private FirebaseRecyclerAdapter adapter;
     String currentUserID =null;
     private ImageView profPic;
-
-    private TextView postAdder;
-    // FirebaseUser currentUser;
-    private boolean isContinue = false;
+    private  ProgressBar progressBar;
+    private RelativeLayout layout;
     private boolean isGPS = false;
    // private Boolean myGPS=false
+   private boolean isFragmentDisplayed = false;
+    static final String STATE_FRAGMENT ="state_of_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +68,10 @@ public class BlogDisplayActivity extends AppCompatActivity {
         //inflate the tool bar
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
+
+
+
         profPic=findViewById(R.id.uImage);
         //initialize recyclerview
         recyclerView = findViewById(R.id.recyclerView);
@@ -82,8 +80,8 @@ public class BlogDisplayActivity extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        postAdder=findViewById(R.id.articulate);
-
+        TextView postAdder = findViewById(R.id.articulate);
+        layout = findViewById(R.id.blogDisplay);
 
 
         //get the database reference where you will fetch posts
@@ -100,11 +98,11 @@ public class BlogDisplayActivity extends AppCompatActivity {
             startActivity(loginIntent);
         }
         //Initialize the instance of the firebase user
-        mCurrentUser = mAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
-
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                                                  @Override
                                                  public void onDataChange(DataSnapshot dataSnapshot) {
@@ -126,7 +124,10 @@ public class BlogDisplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent articulate = new Intent(BlogDisplayActivity.this, PostActivity.class);
-                startActivity(articulate);
+               // articulate.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+              startActivity(articulate);
+             // finish();
+
 
             }
         });
@@ -137,163 +138,194 @@ public class BlogDisplayActivity extends AppCompatActivity {
     protected void onStart() {
         //
         super.onStart();
+     // adapter.notifyDataSetChanged();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            //if user is logged in populate the Ui With card views
-            updateUI(currentUser);
-            adapter.startListening();
-
-        }
-
-    }
-    private void updateUI(final FirebaseUser currentUser) {
-        //create and initialize an instance of Query that retrieves all posts uploaded
-        Query query = FirebaseDatabase.getInstance().getReference().child("Posts");
-        // Create and initialize and instance of Recycler Options passing in your model class and
-        FirebaseRecyclerOptions<Attic> options = new FirebaseRecyclerOptions.Builder<Attic>().
-                setQuery(query, new SnapshotParser<Attic>() {
-                    @NonNull
-                    @Override
-                    //Create a snap shot of your model
-                    public Attic parseSnapshot(@NonNull DataSnapshot snapshot) {
-                        return new Attic(snapshot.child("title").getValue().toString(),
-                                snapshot.child("desc").getValue().toString(),
-                                snapshot.child("postImage").getValue().toString(),
-                                snapshot.child("displayName").getValue().toString(),
-                                snapshot.child("profilePhoto").getValue().toString(),
-                                snapshot.child("time").getValue().toString(),
-                                snapshot.child("date").getValue().toString(),
-                                snapshot.child("location").getValue().toString());
-
-                    }
-                })
-                .build();
-        // crate a fire base adapter passing in the model, an a View holder
-        // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
-        //Then implement the methods onCreateViewHolder and onBindViewHolder
-        //Complete all the steps in the AtticViewHolder before proceeding to  the methods onCreateViewHolder, and onBindViewHolder
-        adapter = new FirebaseRecyclerAdapter<Attic, AtticViewHolder>(options) {
+            loadData();
 
 
-            @NonNull
-            @Override
-            public AtticViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                //inflate the layout where you have the card view items
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_items, parent, false);
-                return new AtticViewHolder(view);
-            }
 
-            @Override
-            protected void onBindViewHolder(@NonNull AtticViewHolder holder, int position, @NonNull Attic model) {
-                // very important for you to get the post key since we will use this to set likes and delete a o particular post
-                final String post_key = getRef(position).getKey();
-                //populate the card views with data
-                holder.setTitle(model.getTitle());
-                holder.setDesc(model.getDesc());
-                holder.setPostImage(getApplicationContext(), model.getPostImage());
-                holder.setUserName(model.getDisplayName());
-                holder.setProfilePhoto(getApplicationContext(), model.getProfilePhoto());
-                holder.setTime(model.getTime());
-                holder.setDate(model.getDate());
-                holder.setLocation(model.getLocation());
-                //set a like on a particular post
-                holder.setLikeButtonStatus(post_key);
-                holder.commentPostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent singleActivity = new Intent(BlogDisplayActivity.this, SinglePostActivity.class);
-                        singleActivity.putExtra("PostID", post_key);
-                        startActivity(singleActivity);
-
-                    }
-                });
-                //add  on click listener on the a particular post to  allow opening this post on a different screen
-                holder.post_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //launch the screen single post activity on clicking a particular cardview item
-                        //create this activity using the empty activity template
-                        Intent singleActivity = new Intent(BlogDisplayActivity.this, SinglePostActivity.class);
-                        singleActivity.putExtra("PostID", post_key);
-                        startActivity(singleActivity);
-                    }
-                });
-                // set the onclick listener on the button for liking a post
-                holder.likePostButton.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // initialize the like checker to true, we are using this boolean variable to determine if a post has been liked or dislike
-                        // we declared this variable on to of our activity class
-                        likeChecker = true;
-                        //check the currently logged in user using his/her ID
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        if (user != null) {
-                            currentUserID=user.getUid();
-                        } else {
-                            Toast.makeText(BlogDisplayActivity.this, R.string.please_login,Toast.LENGTH_SHORT).show();
-
-                        }
-                        //Listen to changes in the likes database reference
-                        likesRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (likeChecker.equals(true)) {
-                                    // if the current post has a like, associated to the current logged and the user clicks on it again, remove the like
-                                    //basically the user is disliking
-                                    if (dataSnapshot.child(post_key).hasChild(currentUserID)) {
-                                        likesRef.child(post_key).child(currentUserID).removeValue();
-                                        likeChecker = false;
-                                    } else {
-                                        //here the user is liking, set value on the like
-                                        likesRef.child(post_key).child(currentUserID).setValue(true);
-                                        likeChecker = false;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                });
-            }
-        };
-
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadData();
+    }
+
+/*
     @Override
     protected void onStop() {
         super.onStop();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
 
-            adapter.stopListening();
+           adapter.stopListening();
 
-        }
+        }*/
+
+
+
+
+
+    public void loadData(){
+        FirebaseRecyclerOptions<Attic> options =
+                new FirebaseRecyclerOptions.Builder<Attic>()
+                        .setQuery(postsRef, Attic.class)
+                        .build();
+        FirebaseRecyclerAdapter<Attic, BlogDisplayActivity.AtticViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Attic, BlogDisplayActivity.AtticViewHolder>(options) {
+
+
+                    @NonNull
+                    @Override
+                    public AtticViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_items, parent, false);
+
+                        return new BlogDisplayActivity.AtticViewHolder(view);
+                    }
+
+                    @Override
+                    protected void onBindViewHolder(@NonNull AtticViewHolder holder, int position, @NonNull Attic attic) {
+                        final String post_key = getRef(position).getKey();
+                        holder.post_layout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //launch the screen single post activity on clicking a particular cardview item
+                                //create this activity using the empty activity template
+                                Intent singleActivity = new Intent(BlogDisplayActivity.this, SinglePostActivity.class);
+                                singleActivity.putExtra("PostID", post_key);
+                                startActivity(singleActivity);
+                                ;
+                            }
+                        });
+
+                        holder.commentPostButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent singleActivity = new Intent(BlogDisplayActivity.this, SinglePostActivity.class);
+                                singleActivity.putExtra("PostID", post_key);
+                                startActivity(singleActivity);
+                                //finish();
+
+                            }
+                        });
+                        postsRef.child(post_key).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+
+                                    String postTitle = (String) snapshot.child("title").getValue();
+                                    String postDescription = (String) snapshot.child("desc").getValue();
+                                    String displayName = (String) snapshot.child("displayName").getValue();
+                                    String profilePhoto = (String) snapshot.child("profilePhoto").getValue();
+                                    String date = (String) snapshot.child("date").getValue();
+                                    String organisation = (String) snapshot.child("organisation").getValue();
+                                    String country = (String) snapshot.child("country").getValue();
+                                    holder.setLikeButtonStatus(post_key);
+                                    holder.post_title.setText(postTitle);
+                                    holder.post_desc.setText(postDescription);
+                                    holder.userCountry.setText(country);
+                                    holder.userOrganisation.setText(organisation);
+
+                                    if (snapshot.hasChild("postImage")){
+                                        String postImage = (String) snapshot.child("postImage").getValue();
+                                        holder.post_image.setVisibility(View.VISIBLE);
+                                        Picasso.with(BlogDisplayActivity.this).load(postImage).into(holder.post_image);
+
+                                    }
+
+
+                                    holder.postUserName.setText(displayName);
+
+                                    Picasso.with(BlogDisplayActivity.this).load(profilePhoto).resize(500, 500)
+                                            .transform(new CropCircleTransformation())
+                                            .into(holder.user_image);
+
+                                    holder.postDate.setText(date);
+
+
+                                }
+                                holder.likePostButton.setOnClickListener(new View.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(View v) {
+                                        // initialize the like checker to true, we are using this boolean variable to determine if a post has been liked or dislike
+                                        // we declared this variable on to of our activity class
+                                        likeChecker = true;
+                                        //check the currently logged in user using his/her ID
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        if (user != null) {
+                                            currentUserID = user.getUid();
+                                        } else {
+                                            Toast.makeText(BlogDisplayActivity.this, R.string.please_login, Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        //Listen to changes in the likes database reference
+                                        likesRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (likeChecker.equals(true)) {
+                                                    // if the current post has a like, associated to the current logged and the user clicks on it again, remove the like
+                                                    //basically the user is disliking
+                                                    if (dataSnapshot.child(post_key).hasChild(currentUserID)) {
+                                                        likesRef.child(post_key).child(currentUserID).removeValue();
+                                                        likeChecker = false;
+                                                    } else {
+                                                        //here the user is liking, set value on the like
+                                                        likesRef.child(post_key).child(currentUserID).setValue(true);
+                                                        likeChecker = false;
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+                };
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+
+        adapter.startListening();
 
     }
 
-
     public class AtticViewHolder extends RecyclerView.ViewHolder{
         //Declare the view objects in the card view
-        public TextView post_title;
-        public TextView post_desc;
-        public ImageView post_image;
-        public TextView postUserName;
-        public ImageView user_image;
-        public TextView postTime;
-        public TextView postDate;
-        public LinearLayout post_layout;
-        public ImageButton likePostButton, commentPostButton;
-        public TextView displayLikes;
-        public TextView userLocation;
+        public final TextView post_title;
+        public final TextView post_desc;
+        public final ImageView post_image;
+        public final TextView postUserName;
+        public final ImageView user_image;
+        public final TextView postTime;
+        public final TextView postDate;
+        public final LinearLayout post_layout;
+        public final ImageButton likePostButton;
+        public final ImageButton commentPostButton;
+        public final TextView displayLikes;
+
+        public final ProgressBar loadPhoto;
+        public final RelativeLayout relativeLayout;
+        public final TextView userOrganisation;
+        public final TextView userCountry;
+
+
         //Declare an int variable to hold the count  of likes
         int countLikes;
         //Declare a string variable to hold  the user ID of currently logged in user
@@ -301,7 +333,7 @@ public class BlogDisplayActivity extends AppCompatActivity {
         //Declare an instance of firebase authentication
         FirebaseAuth mAuth;
         //Declare a database reference where you are saving  the likes
-        DatabaseReference likesRef;
+        final DatabaseReference likesRef;
         //create constructor matching super
         public AtticViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -312,52 +344,35 @@ public class BlogDisplayActivity extends AppCompatActivity {
             postUserName = itemView.findViewById(R.id.post_user);
             user_image = itemView.findViewById(R.id.userImage);
             postTime = itemView.findViewById(R.id.time);
-            postDate = itemView.findViewById(R.id.date);
+
+            postDate = itemView.findViewById(R.id.textView_date);
+            userCountry=itemView.findViewById(R.id.textView_country);
+            userOrganisation=itemView.findViewById(R.id.textView_organisation);
+
+
+
+
             post_layout = itemView.findViewById(R.id.linear_layout_post);
+            relativeLayout=itemView.findViewById(R.id.progress);
             likePostButton = itemView.findViewById(R.id.like_button);
             commentPostButton = itemView.findViewById(R.id.comment);
             displayLikes = itemView.findViewById(R.id.likes_display);
-            userLocation=itemView.findViewById(R.id.textview_location);
+
+
+            post_image.setVisibility(View.GONE);
 
             //Initialize a database reference where you will store  the likes
             likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
-        }
-        // create yos setters, you will use this setter in you onBindViewHolder method
-        public void setTitle(String title){
+            loadPhoto = new ProgressBar(BlogDisplayActivity.this, null, android.R.attr.progressBarStyleLarge);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+             params.addRule(RelativeLayout.CENTER_IN_PARENT);
+             relativeLayout.addView(loadPhoto, params);
 
-            post_title.setText(title);
-        }
-        public void setDesc(String desc){
-
-            post_desc.setText(desc);
-        }
-        public void setPostImage(Context ctx, String postImage){
-
-            Picasso.with(ctx).load(postImage).into(post_image);
-        }
-        public void setUserName(String userName){
-
-            postUserName.setText(userName);
-        }
-        public void  setProfilePhoto(Context context,String profilePhoto){
-           // Picasso.with(context).load(profilePhoto).into(user_image);
-            Picasso.with(context).load(profilePhoto).resize(200,200)
-                    .transform(new CropCircleTransformation())
-                    .into(user_image);
-
-
-
+           loadPhoto.setVisibility(View.GONE);
 
         }
-        public void setTime(String time) {
-            postTime.setText(time);
-        }
-        public void setDate(String date) {
-            postDate.setText(date);
-        }
-        public void setLocation(String location){
-            userLocation.setText(location);
-        }
+
+
         public void setLikeButtonStatus(final String post_key){
             //we want to know who has like a particular post, so let's get the user using their user_ID
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -410,17 +425,10 @@ public class BlogDisplayActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        //implement the functionality of the add icon, so that the user on clicking it launches the post activity
-        else if (id == R.id.action_add) {
-            Intent postIntent=new Intent(this,PostActivity.class);
-            startActivity(postIntent);
-            // on clicking log out, log the user out
-        } else if (id == R.id.logout){
+                  // on clicking log out, log the user out
+       if (id == R.id.logout){
             mAuth.signOut();
-            Intent logouIntent = new Intent(BlogDisplayActivity.this, RegisterActivity.class);
+            Intent logouIntent = new Intent(BlogDisplayActivity.this, LoginActivity.class);
             logouIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(logouIntent);
         }
@@ -435,7 +443,8 @@ public class BlogDisplayActivity extends AppCompatActivity {
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         // All required changes were successfully made
-                      isContinue=true;
+                        // FirebaseUser currentUser;
+                        boolean isContinue = true;
                        // Intent articulate = new Intent(BlogDisplayActivity.this, PostActivity.class);
                       //  startActivity(articulate);
 
@@ -453,4 +462,13 @@ public class BlogDisplayActivity extends AppCompatActivity {
                 break;
         }
     }
+    @Override
+    public void onBackPressed()
+    {
+        Intent myIntent=new Intent(BlogDisplayActivity.this, MainActivity.class);
+        startActivity(myIntent);
+        super.onBackPressed();  // optional depending on your needs
+
+    }
+
 }

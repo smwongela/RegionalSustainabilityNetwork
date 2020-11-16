@@ -14,7 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProjectActivity extends AppCompatActivity {
-     private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +23,13 @@ public class ProjectActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
-            Intent loginIntent = new Intent(ProjectActivity.this, RegisterActivity.class);
+            Intent loginIntent = new Intent(ProjectActivity.this, LoginActivity.class);
             loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(loginIntent);
-              }
+        }
 
         //inflate the tool bar
         Toolbar toolbar = findViewById(R.id.tool_bar);
@@ -63,6 +64,7 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -74,12 +76,21 @@ public class ProjectActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.logout){
-          //  mAuth.signOut();
+        if (id == R.id.logout) {
+            //  mAuth.signOut();
             mAuth.signOut();
-            Intent logouIntent = new Intent(ProjectActivity.this, RegisterActivity.class);
+            Intent logouIntent = new Intent(ProjectActivity.this, LoginActivity.class);
             logouIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(logouIntent);
+            finish();
+        }
+
+        if (id == R.id.home_page) {
+            //  mAuth.signOut();
+
+            Intent mainIntent = new Intent(ProjectActivity.this, MainActivity.class);
+
+            startActivity(mainIntent);
         }
         return super.onOptionsItemSelected(item);
     }

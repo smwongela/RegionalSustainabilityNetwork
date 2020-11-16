@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,17 +32,18 @@ public class QuestionThree extends AppCompatActivity {
     private TextView textView_questionYes;
     private TextInputEditText input_policy;
     private TextInputLayout policy_layout;
-    private FirebaseUser mCurrentUser;
     private DatabaseReference surveyRef,mDatabaseUsers;
     String post_key = null;
     String selectedRadio =null;
     int radioValue=1;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_three);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         textView_questionYes=findViewById(R.id.if_yes);
         input_policy=findViewById(R.id.policies);
         policy_layout=findViewById(R.id.policies_layout);
@@ -49,13 +52,20 @@ public class QuestionThree extends AppCompatActivity {
         textView_questionYes.setVisibility(View.INVISIBLE);
         policy_layout.setVisibility(View.INVISIBLE);
         input_policy.setVisibility(View.INVISIBLE);
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(QuestionThree.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
             Intent loginIntent = new Intent(QuestionThree.this, LoginActivity.class);
             //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(loginIntent);
         }
-        mCurrentUser = mAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         surveyRef = FirebaseDatabase.getInstance().getReference().child("Reports").child(post_key);
 
         //Get currently logged in user
@@ -72,6 +82,7 @@ public class QuestionThree extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
                     validate();
                 }
             });
@@ -123,15 +134,16 @@ public class QuestionThree extends AppCompatActivity {
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    surveyRef.child("QuestionThree").child("Label").setValue(q3Label);
-                    surveyRef.child("QuestionThree").child("SelectedOption").setValue(selectedOption);
-                    surveyRef.child("QuestionThree").child("Weight").setValue(calculatedValue);
-                    surveyRef.child("QuestionThree").child("Policies").setValue(achievedPolicies)
+                    surveyRef.child("QuestionTwo").child("Label").setValue(q3Label);
+                    surveyRef.child("QuestionTwo").child("SelectedOption").setValue(selectedOption);
+                    surveyRef.child("QuestionTwo").child("Weight").setValue(calculatedValue);
+                    surveyRef.child("QuestionTwo").child("Policies").setValue(achievedPolicies)
 
 
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
                             Intent next = new Intent(QuestionThree.this, QuestionFour.class);
                             next.putExtra("PostKey",post_key);
                             startActivity(next);

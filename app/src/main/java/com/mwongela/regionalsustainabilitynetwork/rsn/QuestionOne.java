@@ -8,12 +8,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +46,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mwongela.regionalsustainabilitynetwork.AppConstants;
-import com.mwongela.regionalsustainabilitynetwork.EventActivity;
 import com.mwongela.regionalsustainabilitynetwork.FetchAddressTask;
 import com.mwongela.regionalsustainabilitynetwork.LoginActivity;
-import com.mwongela.regionalsustainabilitynetwork.PostActivity;
-import com.mwongela.regionalsustainabilitynetwork.ProfileActivity;
-import com.mwongela.regionalsustainabilitynetwork.ProjectActivity;
 import com.mwongela.regionalsustainabilitynetwork.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.onTaskCompleted {
 
@@ -66,7 +71,7 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
     private static final String TRACKING_LOCATION_KEY = "tracking location";
 
     private FirebaseAuth mAuth;
-    private TextInputEditText numberOfMen, numberOfWomen, numberOfPwd, numberOfYouth;
+    private TextInputEditText numberOfMen, numberOfWomen, numberOfYouth;
     private TextView eventTitle;
     String event_name = null;
     String event_id = null;
@@ -76,22 +81,31 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
     private StorageReference mStorageRef;
     private FirebaseUser mCurrentUser;
     private DatabaseReference surveyRef,mDatabaseUsers;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_one);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         event_id = getIntent().getExtras().getString("EventID");
         event_name = getIntent().getExtras().getString("EventName");
         numberOfMen = findViewById(R.id.number_of_men);
         numberOfWomen = findViewById(R.id.number_of_women);
-        numberOfPwd = findViewById(R.id.number_of_pwd);
+
         numberOfYouth = findViewById(R.id.number_of_youth);
         eventTitle = findViewById(R.id.event_title);
         imageButton = findViewById(R.id.imagebuttonEvent);
         mLocationTextView=findViewById(R.id.location_textView);
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(QuestionOne.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
             Intent loginIntent = new Intent(QuestionOne.this, LoginActivity.class);
@@ -164,9 +178,20 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
         boolean valid = true;
         String men = numberOfMen.getText().toString();
         String women = numberOfWomen.getText().toString();
-        String pwd = numberOfPwd.getText().toString();
+
         String youth = numberOfYouth.getText().toString();
         final String mLocation=mLocationTextView.getText().toString().trim();
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy ");
+        final String stringDate =dateFormat.format(date);
+
+        Date imageDate = new Date();
+
+        SimpleDateFormat dateFor = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+
+        String postRandomName = dateFor.format(imageDate);
+
 
         if (men.isEmpty()) {
             numberOfMen.setError("Required");
@@ -180,12 +205,7 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
         } else {
             numberOfWomen.setError(null);
         }
-        if (pwd.isEmpty()) {
-            numberOfPwd.setError("Required");
-            valid = false;
-        } else {
-            numberOfPwd.setError(null);
-        }
+
         if (youth.isEmpty()) {
             numberOfYouth.setError("Required");
             valid = false;
@@ -200,10 +220,25 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
             if (event_image_uri != null) {
 
                 //create Storage reference node, inside profile_image storage reference where you will save the profile image
-                StorageReference eventImagePath = mStorageRef.child("event_images").child(event_image_uri.getLastPathSegment());
-                //call the putFile() method passing the profile image the user set on the storage reference where you are uploading the image
-                //further call addOnSuccessListener on the reference to listen if the upload task was successful,and get a snapshot of the task
-                eventImagePath.putFile(event_image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                StorageReference eventImagePath = mStorageRef.child("event_images").child(event_image_uri.getLastPathSegment()+ postRandomName+".jpg");
+                Bitmap bmp = null;
+                try {
+                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), event_image_uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                assert bmp != null;
+                bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] data = baos.toByteArray();
+
+                UploadTask uploadTask2 = eventImagePath.putBytes(data);
+
+
+
+
+                               uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         //if the upload of the profile image was successful get the download url
@@ -227,12 +262,12 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
                                                 //add the profilePhoto and displayName for the current user
                                                 newSurvey.child("QuestionOne").child("men").setValue(men);
                                                 newSurvey.child("QuestionOne").child("women").setValue(women);
-                                                newSurvey.child("QuestionOne").child("pwd").setValue(pwd);
                                                 newSurvey.child("QuestionOne").child("youth").setValue(youth);
                                                 newSurvey.child("eventName").setValue(event_name);
                                                 newSurvey.child("eventID").setValue(event_id);
                                                 newSurvey.child("eventPhoto").setValue(eventImage);
                                                 newSurvey.child("location").setValue(mLocation);
+                                                newSurvey.child("date").setValue(stringDate);
                                                 newSurvey.child("UID").setValue(mCurrentUser.getUid());
                                                 newSurvey.child("organisation").setValue(dataSnapshot.child("organisation").getValue());
                                                 newSurvey.child("country").setValue(dataSnapshot.child("Country").getValue());
@@ -246,8 +281,9 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
                                                             // Toast.makeText(ProfileActivity.this, " Profile Created", Toast.LENGTH_SHORT).show();
                                                             //launch the login activity
                                                             final String postKey=newSurvey.getKey();
-                                                            Log.d("KEY",postKey);
-                                                            Intent next = new Intent(QuestionOne.this, QuestionTwo.class);
+
+                                                            progressBar.setVisibility(View.GONE);
+                                                            Intent next = new Intent(QuestionOne.this, QuestionThree.class);
                                                             next.putExtra("EventID",event_id);
                                                             next.putExtra("PostKey",postKey);
                                                             startActivity(next);
@@ -272,6 +308,7 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
                 });
 
             } else {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(QuestionOne.this, "Please Add event photo", Toast.LENGTH_SHORT).show();
             }
 
@@ -295,6 +332,7 @@ public class QuestionOne extends AppCompatActivity  implements FetchAddressTask.
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
                     validate();
 
                 }

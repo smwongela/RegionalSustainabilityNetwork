@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.mwongela.regionalsustainabilitynetwork",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 1,
+      "versionName": "1.0 RSN Beta Test",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    }
+  ]
+}

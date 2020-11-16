@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/print_survey"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linear_survey"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+
+        android:background="@color/greenDark"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/greenDark">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewImage"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"
+                card_view:cardCornerRadius="3dp"
+                card_view:cardElevation="4dp">
+
+                <ImageView
+                    android:id="@+id/single_partner_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/can"
+                    android:contentDescription="@string/todo" />
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/single_survey_convener"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/cadim"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/single_survey_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/nairobi"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/single_survey_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/nairobi"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_post"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:background="@color/greenDark"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:id="@+id/single_survey_image"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:id="@+id/single_survey_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:textColor="#ffffff"
+                android:text="@string/event_name"/>
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yellow_color"
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/q1_constellation_of_participants"/>
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="250dp"
+            android:src="@drawable/sexresize"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textMen"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+
+                android:text="@string/men_"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/numberMen"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+                android:text="@string/number"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/textMen"
+                android:textColor="@color/yellow_color"
+                />
+            <TextView
+                android:id="@+id/textWomen"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+                android:layout_below="@id/textMen"
+                android:text="@string/women_"
+
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/numberWomen"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+                android:text="@string/number"
+                android:layout_below="@id/textMen"
+                android:layout_toEndOf="@id/textWomen"
+                android:textColor="@color/yellow_color"
+                android:layout_marginStart="5dp"/>
+            <TextView
+                android:id="@+id/textYouth"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+                android:layout_below="@id/textWomen"
+                android:text="@string/youth_"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/numberYouth"
+                android:layout_width="wrap_content"
+                android:layout_height= "wrap_content"
+                android:text="@string/number"
+                android:layout_below="@id/textWomen"
+                android:layout_toEndOf="@id/textYouth"
+                android:textColor="@color/yellow_color"
+                android:layout_marginStart="5dp"/>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutSinglePolicies"
+                android:orientation="vertical"
+                >
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:id="@+id/textView_national_policies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+
+                android:fontFamily="sans-serif-light"
+                android:text="@string/national_policie_s_supported"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/yellow_color" />
+
+            <TextView
+                android:id="@+id/singlePolicies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/policies"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+
+                android:fontFamily="sans-serif-light"
+                android:text="@string/level_of_success"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/yellow_color" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_medium"
+
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/response"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    android:textColor="@android:color/white" />
+                <TextView
+                    android:id="@+id/successChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_medium"
+
+                    android:fontFamily="sans-serif-light"
+
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    android:textColor="@color/yellow_color"/>
+            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/image_success"
+                    android:layout_width="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="250dp"
+                    android:src="@drawable/medium"/>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+
+                android:fontFamily="sans-serif-light"
+                android:text="@string/challenges"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/yellow_color" />
+
+            <TextView
+                android:id="@+id/singleChallenges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/challenges"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutCadim"
+            android:visibility="gone"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/cadim1Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCadimOne"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+               />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/cadim2Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCadimTwo"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/cadim3Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCadimThree"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/cadim4Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCadimFour"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+               />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutCeal"
+            android:visibility="gone"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/ceal1Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCealOne"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/ceal2Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCealTwo"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/ceal3Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCealThree"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/ceal4Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCealFour"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutCan"
+            android:visibility="gone"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/can1Label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCanOne"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/can2label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCanTwo"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/can3label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCanThree"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/can4label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/imageCanFour"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="250dp"
+                />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_screenshot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+           android:onClick="printSurvey"
+            android:padding="4dp"
+            android:textColor="#ffff00"
+            android:clickable="true"
+            android:background="@drawable/action_button_style"
+            android:textAllCaps="false"
+            android:text="@string/screenshot"
+            android:focusable="true" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    </LinearLayout>
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>
+
+

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@color/ic_rsn_africa_background"/>
-    <foreground android:drawable="@mipmap/ic_rsn_africa_foreground"/>
-</adaptive-icon>

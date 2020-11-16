@@ -3,14 +3,13 @@ package com.mwongela.regionalsustainabilitynetwork;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,44 +26,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.util.Calendar;
+import com.mwongela.regionalsustainabilitynetwork.rsn.QuestionTwo;
 
 public class CreateProjectActivity extends AppCompatActivity {
-    private ProgressBar progress_bar;
-    private FloatingActionButton fab;
-    private View parent_view;
     private TextInputEditText project_date, project_Goals, project_name, project_activities, project_impact;
 
-    private ArrayAdapter projectCountryAdapterForSpinner, convenerAdapterForSpinner;
     private TextInputEditText projectCountry_input;
     private TextInputEditText convener_input;
 
     private Spinner spinnerProjectCountry;
     private Spinner spinnerConvener;
 
-    //Declare an Instance of the Storage reference where we will upload the post photo
-    private StorageReference mStorageRef;
     //Declare an Instance of the database reference  where we will be saving the post details
     private DatabaseReference databaseRef;
-    //Declare an Instance of firebase authentication
-    private FirebaseAuth mAuth;
     //Declare an Instance of the database reference  where we have user details
     private DatabaseReference mDatabaseUsers;
     //Declare a Instance of currently logged in user
     private FirebaseUser mCurrentUser;
-
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
+   private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
-        parent_view = findViewById(android.R.id.content);
-        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
-        fab = (FloatingActionButton) findViewById(R.id.fabSubmitProject);
+        View parent_view = findViewById(android.R.id.content);
 
 
-        project_date = (TextInputEditText) findViewById(R.id.projectStartDate);
+        project_date = findViewById(R.id.projectStartDate);
         project_Goals = (TextInputEditText) findViewById(R.id.projectGoals);
 
         project_name = (TextInputEditText) findViewById(R.id.projectName);
@@ -77,12 +67,20 @@ public class CreateProjectActivity extends AppCompatActivity {
         spinnerConvener = (Spinner) findViewById(R.id.spinner_project_convener);
         convener_input = findViewById(R.id.input_subject_project_convener);
 
-        //Initialize the storage reference
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(CreateProjectActivity.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         //Initialize the database reference/node where you will be storing posts
         databaseRef = FirebaseDatabase.getInstance().getReference().child("Projects");
-        //Initialize an instance of  Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+
+
         //Initialize the instance of the firebase user
         mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
@@ -92,7 +90,7 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         final String[] countries = getResources().getStringArray(R.array.countries);
 
-        projectCountryAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries);
+        ArrayAdapter projectCountryAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries);
         projectCountryAdapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerProjectCountry.setAdapter(projectCountryAdapterForSpinner);
 
@@ -137,7 +135,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         //final TextInputEditText country_input = findViewById(R.id.input_subject_country);
         final String[] convener = getResources().getStringArray(R.array.partners);
 
-        convenerAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, convener);
+        ArrayAdapter convenerAdapterForSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, convener);
         convenerAdapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerConvener.setAdapter(convenerAdapterForSpinner);
 
@@ -176,27 +174,30 @@ public class CreateProjectActivity extends AppCompatActivity {
                 convener_input.setText("");
             }
         });
-
-
-
-/*
-
-
-        event_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogDatePickerLight(event_date);
-            }
-        });
-*/
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                validate();
-            }
-        });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        FloatingActionButton fab =  findViewById(R.id.fabSubmitProject);
+        if (currentUser != null) {
+
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    validate();
+                }
+            });
+
+        }
+    }
+
+
+
 
 
     // Input Validation
@@ -280,9 +281,11 @@ public class CreateProjectActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         //launch the main activity after posting
-
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(CreateProjectActivity.this, R.string.project_created, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(CreateProjectActivity.this, ProjectActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 }
                             });

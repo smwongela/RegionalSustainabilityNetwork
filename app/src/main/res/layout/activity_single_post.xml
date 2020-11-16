@@ -1,38 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-  android:background="#000000"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="false"
+
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <LinearLayout
+    android:background="@color/greenDark"
+    android:layout_height="match_parent"
+    tools:context=".SinglePostActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/navy_blue"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:logo="@mipmap/ic_rsn_africa"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/app_title" />
+
+    <ScrollView
+        android:layout_below="@id/tool_bar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:orientation="horizontal"
-
-        android:paddingBottom="10dp">
-        <TextView
-            android:id="@+id/articulate"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-
-            android:text="@string/write_a_post"
-            android:gravity="center"
-            android:fontFamily="sans-serif"
-            android:textColor="#ffffff"
-            android:textStyle="italic"
-            android:textColorHint="#000000" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <View
+            android:id="@+id/spacingView"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+
+        android:background="@color/greenDark"
+        android:orientation="vertical">
 
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/greenDark"
+            android:paddingBottom="10dp">
+
+
+            <ImageView
+                android:id="@+id/user"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/circular_bordershape"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:id="@+id/poster_user"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/user"
+                android:layout_marginStart="5dp"
+                android:fontFamily="serif"
+                android:gravity="end"
+                android:text="@string/stanslaus"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/poster_user"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/user"
+                >
+
+                <TextView
+                    android:id="@+id/tV_organisation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:text="Cadim"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tV_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:text="Ghana"
+                    android:textColor="@color/yellow_color"
+                    />
+
+                <TextView
+                    android:id="@+id/tV_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:text="@string/date"
+                    android:textColor="#ffffff"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:background="@color/greenDark"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/progress"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/poster_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/post_title"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/post_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/post_description"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+
+           <TextView
+               android:id="@+id/deleteBtn"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="0dp"
+               android:gravity="end"
+               android:textAllCaps="false"
+               android:clickable="true"
+               android:background="@color/greenDark"
+               android:text="Delete Post"
+               android:textColor="#ff0000"
+               android:textStyle="bold"
+               android:focusable="true" />
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:background="@android:color/white"
+               />
+
+
+
+           <TextView
+               android:layout_margin="5dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/yellow_color"
+               android:textStyle="bold"
+               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+               android:text="@string/comments"/>
+           <RelativeLayout
+               android:id="@+id/display"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/comment_recycler"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" />
+           </RelativeLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="4dp"
+               android:background="@color/greenDark"
+
+               android:orientation="vertical">
+
+               <LinearLayout
+                   android:id="@+id/layout_comment"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@color/greenDark"
+                   android:orientation="horizontal"
+                   android:paddingBottom="10dp">
+
+
+
+                   <ImageView
+                       android:id="@+id/commentingUserImage"
+                       android:layout_width="40dp"
+                       android:layout_height="40dp"
+                       android:layout_marginStart="8dp"
+                       android:layout_gravity="center_vertical"
+
+                       />
+
+                   <EditText
+                       android:id="@+id/editTextcomment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:layout_marginStart="4dp"
+                       android:layout_weight="2"
+                       android:hint="@string/make_a_comment"
+                       android:textColor="#fff"
+                       android:textColorHint="@android:color/white" />
+
+                   <TextView
+                       android:id="@+id/postComment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:layout_marginEnd="10dp"
+                       android:clickable="true"
+
+                       android:text="@string/post"
+                       android:textColor="@color/yellow_color"
+                       android:textStyle="bold"
+                       android:focusable="true" />
+
+
+               </LinearLayout>
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="80dp"/>
+           </LinearLayout>
+
+       </LinearLayout>
+
+            </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -2,48 +2,39 @@
     <string name="app_name">Regional Sustainability Network</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="get_location" translatable="false">Start Tracking Location</string>
-    <string name="android_image" translatable="false">Android Image</string>
-    <string name="textview_hint" translatable="false">Press the button to get Start tracking your
-        location</string>
-    <string name="location_text" translatable="false">"Latitude: %1$.4f \n Longitude: %2$.4f
-\n Timestamp: %3$tr"</string>
-    <string name="no_location" translatable="false">Could not get location</string>
     <string name="geo_not_available" translatable="false">Geo coding service is not available</string>
     <string name="no_address_found" translatable="false">No address found</string>
     <string name="address_text">"Near: %1$s \n At: %2$tr"</string>
+
     <string name="loading">Loading.....</string>
     <string name="invalid_lat_long_used">Invalid lat log</string>
-    <string name="stop_tracking_location">Stop tracking location</string>
     <string name="tab_label_1">Projects </string>
     <string name="tab_label_2">Events </string>
     <string name="tab_label_3">Reports</string>
-    <string name="partner_label">Project Dashboard</string>
     <string name="projectTitle"><![CDATA[Energy Systems Ownership \n& Governance]]></string>
     <string name="rsn">Regional Sustainability Network</string>
     <string name="men">Men</string>
     <string name="people_with_disabilities">People with Disabilities</string>
     <string name="yes">Yes</string>
-    <string name="medium">Medium</string>
+
     <string name="agree">Agree</string>
-    <string name="event_name">Event Name</string>
+
     <string name="select_event_photo">Select event photo</string>
     <string name="label_q2">Q2. How have the target beneficiaries benefited from the activities?</string>
-    <string name="qn3Label">Q3. Has the initiative been instrumental in supporting a national policy?</string>
-    <string name="qn4Label">Q4.How would you rate the level of success of the pilot initiative at this stage?</string>
-    <string name="qn5Label">Q5. What are the challenges that you encountered during the activity and how did you resolve them?</string>
+    <string name="qn3Label">Q2. Has the initiative been instrumental in supporting a national policy?</string>
+    <string name="qn4Label">Q3.How would you rate the level of success of the pilot initiative at this stage?</string>
+    <string name="qn5Label">Q4. What are the challenges that you encountered during the activity and how did you resolve them?</string>
 
     <string name="this_is_for_cadim">THIS IS FOR CADIM</string>
 
-    <string name="qnCan10">Q10.The pilot initiative outcomes will enhance clean energy use in all districts and across Tanzania as a whole</string>
+    <string name="can5label" translatable="false">Q10.The pilot initiative outcomes will enhance clean energy use in all districts and across Tanzania as a whole</string>
     <string name="create_project">Create Project</string>
     <string name="project_details">Project Details</string>
     <string name="project_name">Project Name</string>
     <string name="project_convener">Project Convener</string>
     <string name="project_country">Project Country</string>
     <string name="project_start_date_end_date">Project Start Date-End Date</string>
-    <string name="project_goals">Project Goals</string>
+
     <string name="project_activities">Project Activities</string>
     <string name="expected_impact">Expected Impact</string>
     <string name="create_event">Create Event</string>
@@ -66,8 +57,8 @@
     <string name="thank_you">Thank you for completing the survey</string>
     <string name="add_a_picture">Add a Picture</string>
     <string name="title">Title?</string>
-    <string name="what_do_you_want_to_talk_about">What do you want to talk about?</string>
-    <string name="post">Post</string>
+    <string name="what_do_you_want_to_talk_about">What\'s in your mind?</string>
+
     <string name="create_profile">Create Profile</string>
     <string name="set_profile_photo">Set Profile Photo</string>
     <string name="first_name">First Name</string>
@@ -112,9 +103,97 @@
     <string name="not_registered">User not registered!</string>
     <string name="please_login">please login</string>
     <string name="please_turn_gps">Please turn on GPS</string>
+    <string name="exit">Exit</string>
+    <string name="project_created">Project Created</string>
+    <string name="can1Label" translatable="false">Q5. The pilot initiative has contributed towards building the resilience of the communities in Chalinze against the impacts of climate change</string>
+    <string name="complete_question">Please complete this question</string>
+    <string name="disagree">Disagree</string>
+    <string name="strongly_disagree">Strongly Disagree</string>
+    <string name="neutral">Neutral</string>
+    <string name="strongly_agree">Strongly Agree</string>
+    <string name="please_select_radio" translatable="false">Please select a radio button</string>
+    <string name="can2label" translatable="false">Q6. The pilot initiative has been successful in its bottom-up approach of strengthening political ownership and governance of green energy systems</string>
+    <string name="can3label" translatable="false">Q7. A draft District Renewable Energy Strategy has been developed with the engagement of different stakeholders</string>
+    <string name="can4label" translatable="false">Q8. The pilot initiative outcomes will enhance clean energy use in all districts and across Tanzania as a whole</string>
+    <string name="can6label" translatable="false">Q11. The pilot initiative will bring the various district and national agendas and policies on renewable energy into reality and one step closer to actualization/implementation</string>
+    <string name="make_a_comment">make a comment</string>
+    <string name="project_goals">Project Goals</string>
+
+    <string name="project_impact">Project Impact</string>
+    <string name="comments_and_feedback">Comments and FeedBack</string>
+    <string name="post">Post</string>
+    <string name="men_">Men :</string>
+    <string name="women_">Women :</string>
+    <string name="youth_">Youth :</string>
+    <string name="pwd_">People with disabilities :</string>
+    <string name="national_policie_s_supported">National Policie(s) Supported</string>
+    <string name="level_of_success">Level of Success</string>
+    <string name="response">Response :</string>
+    <string name="medium">Medium</string>
+
+    <string name="todo">TODO</string>
+
+    <string name="this_is_for_ceal">THIS IS FOR CEAL</string>
+
+    <string name="regional">Regional</string>
+    <string name="sustainability">Sustainability</string>
+    <string name="network">Network</string>
+
+    <string name="kajiado">kajiado</string>
+
+    <string name="posted_at">Posted AT</string>
+
+    <string name="mwanzoni_workshop">Mwanzoni Workshop</string>
+    <string name="q5_what_are_the_challenges_that_you_encountered_during_the_activity_and_how_did_you_resolve_them">Q5. What are the challenges that you encountered during the activity and how did you resolve them?</string>
+
+
+    <string name="delete_project">Delete project</string>
+
+
+    <string name="numbers">23</string>
+
+
+    <string name="nairobi">Nairobi</string>
+
+    <string name="post_title">Post Title</string>
+    <string name="post_description">Post Description</string>
+
+    <string name="zero">0</string>
+
+    <string name="stanslaus">Stanslaus</string>
+
+
+    <string name="this_is_the_comment">this is the comment</string>
+    <string name="delete">Delete</string>
+
+    <string name="mwanza_social_hall">Mwanza Social Hall</string>
+    <string name="tanzania">Tanzania</string>
+    <string name="can">CAN</string>
+    <string name="workshop">Workshop</string>
+    <string name="_19th_march_2021">19th, March 2021</string>
+    <string name="home_page">Home Page</string>
+    <string name="instructions">Instructions</string>
+    <string name="log_out">Log Out</string>
+
+    <string name="can_partner">CAN, Partner</string>
+    <string name="sep_2020_march_2021">Sep 2020-March 2021</string>
+
+    <string name="event_name">Event Name</string>
+    <string name="time">time</string>
+    <string name="date">date</string>
+    <string name="cadim1Label">Q5. The livelihoods, wellbeing and nutrition of the farmers included in this pilot initiative have been improved</string>
+    <string name="cadim2Label">Q6. Through this initiative, the cassava production sector is now well organized</string>
+    <string name="cadim3Label">Q7. The farmers who have been trained in farm management have learned new skills and are successfully applying them in this initiative</string>
+    <string name="cadim4Label">Q8. The zero waste agriculture model is having positive impacts on the environment</string>
+    <string name="ceal1Label">Q5. Policy makers in the district offices have been successfully linked up in networking and awareness raising as part of the project implementation</string>
+    <string name="ceal2Label">Q6. Through the pilot initiative, the accountability of civil society towards local government and the improvement of climate change service delivery amongst local communities in the areas has been strengthened</string>
+    <string name="ceal3Label">Q7. Climate governance at the local level has been improved through the strengthening of local communities and local civil society’s capacities to collaborate and participate effectively in climate change pathway developments in local development processes</string>
+    <string name="ceal4Label">Q8. The capacity of local CSOs and communities to actively trigger, collaborate and participate actively in local governance for effective climate change developments at the local level has been enhanced</string>
+    <string name="number">24</string>
+    <string name="cadim">CADIM</string>
+    <string name="my_project">My project</string>
     <string-array name="partners">
         <item>EED</item>
-        <item>ECRC</item>
         <item>KCIC</item>
         <item>DRFN</item>
         <item>CEAL</item>
@@ -134,6 +213,7 @@
         <item>Congo</item>
         <item>South Africa</item>
         <item>Ethiopia</item>
+        <item>Djibouti</item>
     </string-array>
     <string-array name="gender">
         <item>Male</item>
@@ -145,4 +225,16 @@
         <item>Training</item>
 
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="comments">Comments</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="reset_password">To reset password, enter your email, press the button and check mail to follow instruction.</string>
+    <string name="your_email_here">Your email here</string>
+    <string name="password_reset">Reset Password</string>
+    <string name="back">BACK</string>
 </resources>

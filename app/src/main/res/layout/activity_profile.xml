@@ -20,7 +20,7 @@
         android:layout_below="@id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/display"
         android:layout_margin="16dp"
 
 
@@ -32,16 +32,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
-            android:id="@+id/start"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/greenDark"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerInside"
+                android:contentDescription="@string/todo" />
+
 
             <LinearLayout
                 android:layout_width="330dp"
@@ -65,14 +66,16 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
                 <ImageButton
-                    android:id="@+id/imagebutton"
+                    android:id="@+id/imageButton"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:clickable="true"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerCrop"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/clipart"
-                    />
+                    android:contentDescription="@string/todo"
+                    android:focusable="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -147,7 +150,6 @@
 
                     <com.google.android.material.textfield.TextInputLayout
 
-                        android:id="@+id/input_layout_subject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditText.White.Hint"
@@ -183,7 +185,6 @@
 
                     <com.google.android.material.textfield.TextInputLayout
 
-                        android:id="@+id/input_layout_organisation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditText.White.Hint"
@@ -221,7 +222,6 @@
 
                     <com.google.android.material.textfield.TextInputLayout
 
-                        android:id="@+id/input_layout_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditText.White.Hint"
@@ -243,7 +243,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/EditText.White.Hint">
-                    _+{A<com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-4dp"
@@ -261,28 +261,34 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/spacing_mxlarge" />
+                    android:layout_height="10dp" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
-
-
                     <Button
 
-                        android:layout_margin="20dp"
+                        android:layout_margin="50dp"
                         android:background="@drawable/button_2"
                         android:textColor="@color/greenDark"
                         android:textStyle="bold"
                         android:id="@+id/doneBtn"
                         android:layout_width="150dp"
+                        android:clickable="true"
                         android:layout_gravity="center_horizontal"
                         android:textAllCaps="false"
                         android:layout_height="wrap_content"
                         android:text="@string/submit"
 
+                        android:focusable="true" />
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:theme="@style/ProgressBar.White"
+                        android:visibility="gone"
                         />
 
 

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,20 +18,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  {
 
 
     private EditText loginEmail, loginPass;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
-    private Button loginBtn;
-    private TextView signUp;
+    private TextView txtStatus;
+    private TextView txtDetail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +43,26 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         //Initialize the views
-        loginBtn = findViewById(R.id.loginBtn);
+       Button  forgotPassword=findViewById(R.id.btn_forgot_password);
+        Button loginBtn = findViewById(R.id.loginBtn);
         loginEmail =findViewById(R.id.login_email);
         loginPass = findViewById(R.id.login_password);
-        signUp=findViewById(R.id.signUpTxtView);
+        TextView signUp = findViewById(R.id.signUpTxtView);
         //Initialize the Firebase Authentication instance
         mAuth = FirebaseAuth.getInstance();
         //Initialize the database reference where you have the child node Users
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //if user is not registered , register him/her
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
+
+
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +113,34 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //get a dataSnapshot of the users database reference to determine if current user exists
 
+
                 if (dataSnapshot.hasChild(user_id)){
                     //if the users exists direct the user to the Main Activity
-                    Intent mainPage = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(mainPage);
+
+                    mDatabaseUsers.child(user_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if(snapshot.hasChild("organisation")){
+
+                                Intent mainPage = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(mainPage);
+                            }else {
+                                Toast.makeText(LoginActivity.this,"Please complete your profile first",Toast.LENGTH_SHORT).show();
+                                Intent profile = new Intent(LoginActivity.this, ProfileActivity.class);
+                                startActivity(profile);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+
                 }else {
                     //if the user id does not exist show a toast
                     Toast.makeText(LoginActivity.this, R.string.not_registered, Toast.LENGTH_SHORT).show();
@@ -116,4 +153,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent myIntent=new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(myIntent);
+        finish();
+        super.onBackPressed();  // optional depending on your needs
+
+    }
+    }

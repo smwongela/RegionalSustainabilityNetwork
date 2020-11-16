@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mwongela.regionalsustainabilitynetwork.CadimOne;
-import com.mwongela.regionalsustainabilitynetwork.CealOne;
+import com.mwongela.regionalsustainabilitynetwork.cadim.CadimOne;
+import com.mwongela.regionalsustainabilitynetwork.ceal.CealOne;
 import com.mwongela.regionalsustainabilitynetwork.LoginActivity;
 import com.mwongela.regionalsustainabilitynetwork.NoFutherQuestions;
 import com.mwongela.regionalsustainabilitynetwork.R;
@@ -29,11 +31,12 @@ import com.mwongela.regionalsustainabilitynetwork.can.CanOne;
 public class QuestionFive extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
-    private FirebaseUser mCurrentUser;
-     private DatabaseReference surveyRef;
+    private DatabaseReference surveyRef;
 
     private TextInputEditText eventChallenges;
     String post_key = null;
+    private ProgressBar progressBar;
+    private RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,12 @@ public class QuestionFive extends AppCompatActivity {
         post_key = getIntent().getExtras().getString("PostKey");
         //Initialize the instance of the firebase user
         mAuth = FirebaseAuth.getInstance();
+        layout = findViewById(R.id.display);
+        progressBar = new ProgressBar(QuestionFive.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar, params);
+        progressBar.setVisibility(View.INVISIBLE);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
 
@@ -50,7 +59,7 @@ public class QuestionFive extends AppCompatActivity {
             //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(loginIntent);
         }
-        mCurrentUser = mAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
         surveyRef = FirebaseDatabase.getInstance().getReference().child("Reports").child(post_key);
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
@@ -66,6 +75,7 @@ public class QuestionFive extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
                     validate();
 
                 }
@@ -84,21 +94,19 @@ public class QuestionFive extends AppCompatActivity {
                     next.putExtra("PostKey",post_key);
                     startActivity(next);
 
-                }
-                if(organisation.equalsIgnoreCase("CEAL")) {
+                }else if(organisation.equalsIgnoreCase("CEAL")) {
                     Intent next = new Intent(QuestionFive.this, CealOne.class);
                     next.putExtra("PostKey",post_key);
                     startActivity(next);
 
 
-                }
-                if(organisation.equalsIgnoreCase("CAN")) {
+                }else if(organisation.equalsIgnoreCase("CAN")) {
                     Intent next = new Intent(QuestionFive.this, CanOne.class);
                     next.putExtra("PostKey",post_key);
                     startActivity(next);
 
 
-                }else {
+                } else {
                     Intent next = new Intent(QuestionFive.this, NoFutherQuestions.class);
                     next.putExtra("PostKey",post_key);
                     startActivity(next);
@@ -134,14 +142,12 @@ public class QuestionFive extends AppCompatActivity {
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    surveyRef.child("QuestionFive").child("Label").setValue(q5Label);
-                    surveyRef.child("QuestionFive").child("Challenges").setValue(challenges).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    surveyRef.child("QuestionFour").child("Label").setValue(q5Label);
+                    surveyRef.child("QuestionFour").child("Challenges").setValue(challenges).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
                             checkPartner();
-
-
-
                         }
                     });
 
