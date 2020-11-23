@@ -3,12 +3,12 @@ public class CommentModel {
     private String displayName, profilePhoto, comment, time, date;
     //create a constructor
 
-    public CommentModel(String displayName, String profilePhoto, String comment, String time, String date) {
+    public CommentModel(String displayName, String profilePhoto, String comment, String date) {
 
         this.comment=comment;
         this.displayName = displayName;
         this.profilePhoto=profilePhoto;
-        this.time=time;
+
         this.date=date;
     }
     //requires an empty constructor
@@ -26,9 +26,7 @@ public class CommentModel {
         this.comment = comment;
     }
 
-    public void setTime(String time){
-        this.time=time;
-    }
+
     public void setDate(String date){
         this.date=date;
     }
@@ -46,9 +44,7 @@ public class CommentModel {
     {
         return profilePhoto;
     }
-    public String getTime(){
-        return time;
-    }
+
     public String getDate(){
         return date;
     }

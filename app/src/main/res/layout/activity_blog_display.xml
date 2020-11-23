@@ -19,14 +19,14 @@
             app:titleTextAppearance="@style/app_title" />
     <RelativeLayout
         android:id="@+id/blogDisplay"
-    android:layout_width="match_parent"
+          android:layout_width="match_parent"
          android:layout_height="wrap_content">
 
-
+<!--
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/greenDark">
+        android:background="@color/greenDark">-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +77,8 @@
         android:layout_height="match_parent" />
 
     </LinearLayout>
-    </ScrollView>
+
+
     </RelativeLayout>
 
 </LinearLayout>

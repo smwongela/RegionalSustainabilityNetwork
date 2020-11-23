@@ -7,13 +7,13 @@ public class Attic {
         private String title, desc, postImage, displayName, profilePhoto, time, date,organisation, country;
         //create a constructor
 
-        public Attic(String title, String desc, String postImage, String displayName, String profilePhoto, String time, String date, String organisation, String country) {
+        public Attic(String title, String desc, String displayName, String profilePhoto,String date, String organisation, String country) {
             this.title = title;
             this.desc = desc;
-            this.postImage = postImage;
+
             this.displayName = displayName;
             this.profilePhoto = profilePhoto;
-            this.time = time;
+
             this.date = date;
 
             this.organisation=organisation;
@@ -25,10 +25,7 @@ public class Attic {
         }
 
         // setters
-        public void setPostImage(String postImage) {
-            this.postImage = postImage;
 
-        }
 
         public void setProfilePhoto(String profilePhoto) {
             this.profilePhoto = profilePhoto;
@@ -46,9 +43,7 @@ public class Attic {
             this.desc = desc;
         }
 
-        public void setTime(String time) {
-            this.time = time;
-        }
+
 
         public void setDate(String date) {
             this.date = date;
@@ -71,9 +66,7 @@ public class Attic {
             return displayName;
         }
 
-        public String getPostImage() {
-            return postImage;
-        }
+
 
         public String getTitle() {
             return title;
@@ -87,9 +80,6 @@ public class Attic {
             return profilePhoto;
         }
 
-        public String getTime() {
-            return time;
-        }
 
         public String getDate() {
             return date;

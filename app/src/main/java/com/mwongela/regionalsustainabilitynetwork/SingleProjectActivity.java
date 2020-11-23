@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -54,7 +55,7 @@ public class SingleProjectActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     EditText makeComment;
-    private FirebaseRecyclerAdapter adapter;
+    FirebaseRecyclerAdapter<CommentModel, SingleProjectActivity.commentModelViewHolder> adapter;
     String currentUserID =null;
 
     //String currentUserID =null;
@@ -199,63 +200,6 @@ public class SingleProjectActivity extends AppCompatActivity {
 
             }
         });
-        postComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(SingleProjectActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
-                //get the comment from the edit texts
-                final String comment = makeComment.getText().toString().trim();
-                //get the date and time of the post
-
-                java.util.Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
-                final String saveCurrentDate = currentDate.format(calendar.getTime());
-
-                java.util.Calendar calendar1 = Calendar.getInstance();
-                SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-                final String saveCurrentTime = currentTime.format(calendar1.getTime());
-                // do a check for empty fields
-                if (!TextUtils.isEmpty(comment)){
-                    final DatabaseReference newComment = commentRef.push();
-                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Toast.makeText(SingleProjectActivity.this, "CHECKING", Toast.LENGTH_SHORT).show();
-                            newComment.child("comment").setValue(comment);
-                            newComment.child("uid").setValue(mCurrentUser.getUid());
-                            newComment.child("time").setValue(saveCurrentTime);
-                            newComment.child("date").setValue(saveCurrentDate);
-                            newComment.child("profilePhoto").setValue(dataSnapshot.child("profilePhoto").getValue());
-                            newComment.child("displayName").setValue(dataSnapshot.child("displayName").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    progressBar.setVisibility(View.GONE);
-                                    // layoutComment.setVisibility(View.VISIBLE);
-                                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                                    updateUI(currentUser);
-                                    adapter.startListening();
-                                    adapter.notifyDataSetChanged();
-                                  //  recyclerView.setAdapter(adapter);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-
-            }
-        });
-    }
-    @Override
-    protected void onStart() {
-        //
-        super.onStart();
         mDatabaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -272,22 +216,26 @@ public class SingleProjectActivity extends AppCompatActivity {
 
             }
         });
-
-
         postComment.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View v) {
-                                               Toast.makeText(SingleProjectActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
-                                               validate();
-                                           }
-                                       });
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(SingleProjectActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.VISIBLE);
+                validate();
+            }
+        });
+
+    }
+    @Override
+    protected void onStart() {
+        //
+        super.onStart();
+
             //if user is logged in populate the Ui With card views
-            updateUI(currentUser);
+            updateUI();
             adapter.startListening();
 
-        }
+
 
     }
     public void  validate(){
@@ -296,13 +244,10 @@ public class SingleProjectActivity extends AppCompatActivity {
         final String comment = makeComment.getText().toString().trim();
         //get the date and time of the post
 
-        java.util.Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
-        final String saveCurrentDate = currentDate.format(calendar.getTime());
+        Date date = new Date();
 
-        java.util.Calendar calendar1 = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        final String saveCurrentTime = currentTime.format(calendar1.getTime());
+        SimpleDateFormat DateFor = new SimpleDateFormat("E, dd MMM yyyy ");
+        final String stringDate = DateFor.format(date);
         // do a check for empty fields
         if (!TextUtils.isEmpty(comment)){
             final DatabaseReference newComment = commentRef.push();
@@ -312,12 +257,17 @@ public class SingleProjectActivity extends AppCompatActivity {
                     Toast.makeText(SingleProjectActivity.this, "CHECKING", Toast.LENGTH_SHORT).show();
                     newComment.child("comment").setValue(comment);
                     newComment.child("uid").setValue(mCurrentUser.getUid());
-                    newComment.child("time").setValue(saveCurrentTime);
-                    newComment.child("date").setValue(saveCurrentDate);
+                    newComment.child("date").setValue(stringDate);
                     newComment.child("profilePhoto").setValue(dataSnapshot.child("profilePhoto").getValue());
-                    newComment.child("displayName").setValue(dataSnapshot.child("displayName").getValue());
+                    newComment.child("displayName").setValue(dataSnapshot.child("displayName").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
+                           // FirebaseUser currentUser = mAuth.getCurrentUser();
+                            //updateUI(currentUser);
+                        }
+                    });
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -329,10 +279,17 @@ public class SingleProjectActivity extends AppCompatActivity {
     }
 
 
-    private void updateUI(final FirebaseUser currentUser) {
+    private void updateUI() {
         //create and initialize an instance of Query that retrieves all posts uploaded
         Query query = FirebaseDatabase.getInstance().getReference().child("Comments").child(post_key);
         // Create and initialize and instance of Recycler Options passing in your model class and
+
+
+        FirebaseRecyclerOptions<CommentModel> options =
+                new FirebaseRecyclerOptions.Builder<CommentModel>()
+                        .setQuery(commentRef, CommentModel.class)
+                        .build();
+        /*
         FirebaseRecyclerOptions<CommentModel> options = new FirebaseRecyclerOptions.Builder<CommentModel>().
                 setQuery(query, new SnapshotParser<CommentModel>() {
                     @NonNull
@@ -342,12 +299,13 @@ public class SingleProjectActivity extends AppCompatActivity {
                         return new CommentModel(snapshot.child("displayName").getValue().toString(),
                                 snapshot.child("profilePhoto").getValue().toString(),
                                 snapshot.child("comment").getValue().toString(),
-                                snapshot.child("time").getValue().toString(),
                                 snapshot.child("date").getValue().toString());
 
                     }
                 })
                 .build();
+
+         */
         // crate a fire base adapter passing in the model, an a View holder
         // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
         //Then implement the methods onCreateViewHolder and onBindViewHolder
@@ -356,13 +314,59 @@ public class SingleProjectActivity extends AppCompatActivity {
 
 
             @Override
-            protected void onBindViewHolder(@NonNull commentModelViewHolder holder, int i, @NonNull CommentModel model) {
+            protected void onBindViewHolder(@NonNull SingleProjectActivity.commentModelViewHolder holder, int i, @NonNull CommentModel model) {
                 final String comment_key = getRef(i).getKey();
-                holder.setUserName(model.getDisplayName());
-                holder.setProfilePhoto(getApplicationContext(), model.getProfilePhoto());
-                holder.setTime(model.getTime());
-                holder.setDate(model.getDate());
-                holder.setComment(model.getComment());
+                //  holder.setUserName(model.getDisplayName());
+                //    holder.setProfilePhoto(getApplicationContext(), model.getProfilePhoto());
+
+                //  holder.setDate(model.getDate());
+                // holder.setComment(model.getComment());
+
+
+
+
+                commentRef.child(comment_key).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+
+                            final String displayName = snapshot.child("displayName").getValue().toString();
+                            final String profilePhoto =  snapshot.child("profilePhoto").getValue().toString();
+                            final String comment = snapshot.child("comment").getValue().toString();
+                            final String date = snapshot.child("date").getValue().toString();
+
+                            holder.commenterName.setText(displayName);
+
+                            Picasso.with(SingleProjectActivity.this).load(profilePhoto).resize(500,500)
+                                    .transform(new CropCircleTransformation())
+                                    .into(holder.commenterimage);
+
+                            holder.commentDate.setText(date);
+                            holder.the_comment .setText(comment);
+
+
+                            holder.deleteComment.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    commentRef.child(comment_key).removeValue();
+
+                                }
+                            });
+
+
+
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
 
                 if (comment_key != null) {
@@ -386,14 +390,6 @@ public class SingleProjectActivity extends AppCompatActivity {
                 }
 
 
-                holder.deleteComment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        commentRef.child(comment_key).removeValue();
-
-                    }
-                });
 
             }
 
@@ -406,10 +402,13 @@ public class SingleProjectActivity extends AppCompatActivity {
                 return new SingleProjectActivity.commentModelViewHolder(view);
             }
 
-        };
 
-        recyclerView.setAdapter(adapter);
+        };
         adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
+
 
     }
 
@@ -449,12 +448,12 @@ public class SingleProjectActivity extends AppCompatActivity {
 
             commenterName = itemView.findViewById(R.id.commenterName);
             commenterimage = itemView.findViewById(R.id.commenterImage);
-            commentTime = itemView.findViewById(R.id.commentTime);
+
             commentDate = itemView.findViewById(R.id.commentDate);
             the_comment = itemView.findViewById(R.id.the_comment);
             deleteComment=itemView.findViewById(R.id.delete_comment);
            // deleteComment.setVisibility(View.INVISIBLE);
-            commentTime.setVisibility(View.GONE);
+
             commentDate.setVisibility(View.GONE);
 
         }
@@ -478,10 +477,10 @@ public class SingleProjectActivity extends AppCompatActivity {
 
 
         }
-        public void setTime(String time) {
-            commentTime.setText(time);
-        }
+
         public void setDate(String date) {
+            commentDate.setVisibility(View.VISIBLE);
+
             commentDate.setText(date);
         }
 

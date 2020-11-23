@@ -15,7 +15,7 @@ public class NoFutherQuestions extends AppCompatActivity {
     }
 
     public void launchMainActivity(View view) {
-        Intent exit = new Intent(this, ProjectActivity.class);
+        Intent exit = new Intent(this,MainActivity.class);
         startActivity(exit);
         finish();
     }

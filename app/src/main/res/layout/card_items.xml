@@ -21,22 +21,31 @@
             android:background="@color/yellow_green"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/greenDark"
-            android:paddingBottom="10dp">
-
+       <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="0dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/greenDark"
+    android:paddingBottom="10dp"
+     android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/userImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
                 android:src="@drawable/circular_bordershape"
                 android:contentDescription="@string/todo" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="5dp"
+                >
 
             <TextView
                 android:id="@+id/post_user"
@@ -44,21 +53,14 @@
 
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/userImage"
-                 android:layout_marginStart="5dp"
+
                 android:fontFamily="serif"
                 android:gravity="end"
                 android:text="@string/stanslaus"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@id/post_user"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/userImage"
-                >
+
 
             <TextView
                 android:id="@+id/textView_organisation"
@@ -87,9 +89,10 @@
                 android:textColor="#ffffff"
                 />
            </LinearLayout>
+</LinearLayout>
 
 
-        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/linear_layout_post"

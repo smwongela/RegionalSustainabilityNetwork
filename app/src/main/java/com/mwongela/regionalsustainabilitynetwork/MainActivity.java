@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 if (currentUser != null) {
                     //   Toast.makeText("")
                     Toast.makeText(MainActivity.this, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+
+
                 }
 
             }

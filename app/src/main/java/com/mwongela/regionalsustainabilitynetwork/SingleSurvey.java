@@ -185,6 +185,7 @@ public class SingleSurvey extends AppCompatActivity {
                     final String  surveyDay=snapshot.child("date").getValue().toString();
 
 
+
                     if (projectConvener.equalsIgnoreCase("Can")) {
                         if (snapshot.exists()) {
                             final String canOne = snapshot.child("CanOne").child("SelectedOption").getValue().toString();
@@ -421,6 +422,10 @@ public class SingleSurvey extends AppCompatActivity {
                     }
 
                             Picasso.with(SingleSurvey.this).load(surveyImage).into(singleSurveyEventImage);
+
+
+
+
                     singleEventName.setText(surveyName);
                     singleLocation.setText(surveyLocation);
                     singlePartnerName.setText(projectConvener);

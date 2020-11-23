@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.mwongela.regionalsustainabilitynetwork">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ceal.CealFour" />
         <activity android:name=".ceal.CealThree" />
         <activity android:name=".ceal.CealTwo" />
